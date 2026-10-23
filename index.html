@@ -1,1 +1,77 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Umbral — Historias que no debieron contarse</title><meta name="description" content="Lee y envía historias de terror. Cada relato es revisado antes de publicarse."><link rel="stylesheet" href="assets/css/styles.css"></head><body><header><a class="brand" href="index.html"><b>U</b><span>UMBRAL<small>RELATOS DE LO INEXPLICABLE</small></span></a><nav><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html">Mi cuenta</a></nav></header><main><section class="hero"><div><p class="eyebrow">HAY HISTORIAS QUE TE ENCUENTRAN</p><h1>Algunas historias<br>no te dejan <em>dormir.</em></h1><p class="lead">Relatos de terror escritos por personas como tú. Encuentros imposibles, lugares que esconden algo y secretos que nunca debieron salir a la luz.</p><a class="button" href="historias.html">Explorar historias ↗</a> <a class="textlink" href="enviar.html">Cuéntanos la tuya →</a><p class="note">NO TODO LO QUE LEES ES FICCIÓN.</p></div><div class="heroimg"><div class="caption">ARCHIVO ABIERTO<strong>El bosque no estaba vacío.</strong></div></div></section><div class="ticker">TESTIMONIOS　✳　LEYENDAS URBANAS　✳　PARANORMAL　✳　FICCIÓN OSCURA</div><section class="section"><div class="sectionhead"><div><p class="eyebrow">LA BIBLIOTECA</p><h2>Historias recientes</h2></div><a class="textlink" href="historias.html">Ver todas →</a></div><div id="home-stories" class="grid">Cargando archivo…</div></section><section class="callout"><div><p class="eyebrow">EL ARCHIVO TAMBIÉN ES TUYO</p><h2>¿Te pasó algo que no puedes explicar?</h2><p>Escríbelo. Revisaremos tu historia antes de publicarla.</p></div><a class="button light" href="enviar.html">Enviar mi historia ↗</a></section><section class="section"><div class="sectionhead"><div><p class="eyebrow">APAGA LA LUZ</p><h2>Historias para escuchar</h2></div><a class="textlink" href="videos.html">Ver narraciones →</a></div><div id="home-videos" class="videos">Las narraciones aparecerán aquí.</div></section></main><footer><a class="brand" href="index.html"><b>U</b><span>UMBRAL<small>RELATOS DE LO INEXPLICABLE</small></span></a><p>Historias compartidas por la comunidad. La oscuridad es solo el comienzo.</p><a href="normas.html">Normas</a> · <a href="privacidad.html">Privacidad</a><small>© <span id="year"></span> Umbral</small></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="assets/js/config.js"></script><script src="assets/js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Umbral: relatos de terror escritos por personas como tú. Historias paranormales, leyendas urbanas y ficción oscura.">
+  <title>Umbral | Relatos de lo inexplicable</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html"><strong>UMBRAL</strong><small>RELATOS DE LO INEXPLICABLE</small></a>
+    <nav aria-label="Navegación principal">
+      <a href="historias.html">Historias</a>
+      <a href="videos.html">Narraciones</a>
+      <a href="enviar.html">Enviar relato</a>
+      <a href="cuenta.html">Mi cuenta</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">HAY HISTORIAS QUE TE ENCUENTRAN</div>
+      <h1>Algunas historias<br>no te dejan <em>dormir.</em></h1>
+      <p>Relatos de terror escritos por personas como tú. Encuentros imposibles, lugares que esconden algo y secretos que nunca debieron salir a la luz.</p>
+      <div class="hero-actions">
+        <a class="button" href="historias.html">Explorar historias ↗</a>
+        <a class="textlink" href="enviar.html">Cuéntanos la tuya →</a>
+      </div>
+    </section>
+
+    <section class="archive-intro">
+      <p class="eyebrow">NO TODO LO QUE LEES ES FICCIÓN.</p>
+      <div class="archive-feature">ARCHIVO ABIERTO <strong>El bosque no estaba vacío.</strong></div>
+      <div class="ticker" aria-label="Categorías">
+        <span>TESTIMONIOS</span><span>✳</span><span>LEYENDAS URBANAS</span><span>✳</span><span>PARANORMAL</span><span>✳</span><span>FICCIÓN OSCURA</span>
+      </div>
+    </section>
+
+    <section class="section-heading">
+      <p class="eyebrow">LA BIBLIOTECA</p>
+      <h2>Historias recientes</h2>
+      <a class="textlink" href="historias.html">Ver todas →</a>
+      <div id="recent-stories" class="story-grid" aria-live="polite">
+        <p>Cargando archivo...</p>
+      </div>
+    </section>
+
+    <section class="callout">
+      <p class="eyebrow">EL ARCHIVO TAMBIÉN ES TUYO</p>
+      <h2>¿Te pasó algo que no puedes explicar?</h2>
+      <p>Escríbelo. Revisaremos tu historia antes de publicarla.</p>
+      <a class="button button-light" href="enviar.html">Enviar mi historia ↗</a>
+    </section>
+
+    <section class="section-heading">
+      <p class="eyebrow">MÁS ALLÁ DE LAS PÁGINAS</p>
+      <h2>Historias para escuchar</h2>
+      <p>Explora narraciones y videos de terror.</p>
+      <a class="textlink" href="videos.html">Ver narraciones →</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand" href="index.html"><strong>UMBRAL</strong><small>RELATOS DE LO INEXPLICABLE</small></a>
+    <p>Historias compartidas por la comunidad. La oscuridad es solo el comienzo.</p>
+    <nav aria-label="Enlaces legales">
+      <a href="normas.html">Normas</a>
+      <a href="privacidad.html">Privacidad</a>
+    </nav>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
