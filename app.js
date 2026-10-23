@@ -1,1 +1,150 @@
-(()=>{'use strict';const C=window.UMBRAL_CONFIG||{},ready=window.supabase&&C.url&&!C.url.startsWith('PEGA_')&&C.key&&!C.key.startsWith('PEGA_'),db=ready?supabase.createClient(C.url,C.key):null,$=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),date=s=>s?new Date(s).toLocaleDateString('es-MX'):'',msg='<div class="empty">Configura Supabase en assets/js/config.js para activar esta función.</div>';if($('#year'))$('#year').textContent=new Date().getFullYear();function storyCard(s){return `<article class="story-card"><span class="category">${esc(s.category)}</span><h3><a href="historia.html?id=${encodeURIComponent(s.id)}">${esc(s.title)}</a></h3><p>${esc(s.summary||s.body.slice(0,150)+'…')}</p><p class="meta">${esc(s.author_name||'Anónimo')} · ${date(s.published_at||s.created_at)}</p><a class="textlink" href="historia.html?id=${encodeURIComponent(s.id)}">Leer relato →</a></article>`}async function stories(el,limit=50){if(!el)return;if(!db){el.innerHTML=msg;return}const {data,error}=await db.from('stories').select('id,title,summary,body,category,author_name,created_at,published_at').eq('status','published').order('published_at',{ascending:false}).limit(limit);el.innerHTML=error?'<div class="empty">No se pudieron cargar relatos. Comprueba schema.sql y la configuración.</div>':data.length?data.map(storyCard).join(''):'<div class="empty">Todavía no hay historias publicadas. <a href="enviar.html">Envía la primera →</a></div>'}if($('#home-stories'))stories($('#home-stories'),3);if($('#stories'))stories($('#stories'));if($('#search')){const filter=()=>document.querySelectorAll('#stories .story-card').forEach(c=>c.hidden=(!c.innerText.toLowerCase().includes($('#search').value.toLowerCase()))||($('#category').value&&!c.innerText.includes($('#category').value)));$('#search').addEventListener('input',filter);$('#category').addEventListener('change',filter)}if($('#detail'))(async()=>{if(!db){$('#detail').innerHTML=msg;return}const id=new URLSearchParams(location.search).get('id');const {data:s}=await db.from('stories').select('*').eq('id',id).eq('status','published').maybeSingle();if(!s){$('#detail').innerHTML='<div class="empty">No encontramos ese relato o aún no está publicado.</div>';return}$('#detail').innerHTML=`<p class="eyebrow">${esc(s.category)}</p><h1>${esc(s.title)}</h1><p class="muted">Por ${esc(s.author_name||'Anónimo')} · ${date(s.published_at)}</p><p class="leadpage">${esc(s.summary||'')}</p><div class="bodytext">${esc(s.body)}</div><p><button class="like" data-type="story" data-id="${s.id}">♡ Me gusta <span>…</span></button> <span class="status"></span></p>`;likes($('#detail'))})();if($('#submit'))$('#submit').addEventListener('submit',async e=>{e.preventDefault();const f=e.currentTarget,d=new FormData(f),st=$('#status');if(d.get('website'))return;if(!db){st.textContent='Primero configura Supabase en assets/js/config.js.';return}const body=String(d.get('body')||'').trim();if(body.length<80){st.textContent='La historia debe tener al menos 80 caracteres.';return}const {data:{user}}=await db.auth.getUser();const row={title:String(d.get('title')).trim(),summary:String(d.get('summary')||'').trim()||null,body,category:String(d.get('category')),author_name:d.get('mode')==='anon'?'Anónimo':String(d.get('author')||'').trim()||'Anónimo',author_id:user?.id||null,status:'pending',consent:true};const {error}=await db.from('stories').insert(row);st.textContent=error?'No se pudo enviar: '+error.message:'¡Recibimos tu historia! Está pendiente de revisión y no se publicará automáticamente.';if(!error)f.reset()});let mode='login';document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('active',x===b));$('#display-wrap').classList.toggle('hidden',mode!=='register');$('#auth-button').textContent=mode==='register'?'Crear cuenta':'Entrar'}));async function account(){if(!$('#auth'))return;if(!db){$('#auth-status').textContent='Configura Supabase para activar cuentas.';return}const {data:{user}}=await db.auth.getUser();$('#auth').classList.toggle('hidden',!!user);$('#signed').classList.toggle('hidden',!user);if(user){$('#who').textContent='Sesión: '+user.email;const {data}=await db.from('stories').select('id,title,status,created_at').eq('author_id',user.id).order('created_at',{ascending:false});$('#mine').innerHTML=(data||[]).map(s=>`<div class="item"><h3>${esc(s.title)}</h3><span class="muted">${esc(s.status)} · ${date(s.created_at)}</span></div>`).join('')||'<p class="muted">No tienes envíos asociados a esta cuenta. Los anónimos no se muestran aquí.</p>'}}if($('#auth')){account();$('#auth').addEventListener('submit',async e=>{e.preventDefault();if(!db)return;const d=new FormData(e.currentTarget),email=String(d.get('email')),password=String(d.get('password'));let r=mode==='register'?await db.auth.signUp({email,password,options:{data:{display_name:String(d.get('display_name')||'')}}}):await db.auth.signInWithPassword({email,password});$('#auth-status').textContent=r.error?r.error.message:(mode==='register'?'Cuenta creada. Revisa tu correo si la confirmación está activada.':'Sesión iniciada.');await account()});$('#logout')?.addEventListener('click',async()=>{await db.auth.signOut();location.reload()})}function youtube(url){try{let u=new URL(url);return u.hostname.includes('youtu.be')?u.pathname.slice(1):u.searchParams.get('v')}catch{return null}}async function videoList(el,limit=40){if(!el)return;if(!db){el.innerHTML=msg;return}const {data,error}=await db.from('videos').select('*').eq('is_published',true).order('created_at',{ascending:false}).limit(limit);if(error||!data.length){el.innerHTML='<div class="empty">Todavía no hay narraciones publicadas.</div>';return}el.innerHTML=data.map(v=>`<article class="video-card">${youtube(v.youtube_url)?`<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(youtube(v.youtube_url))}" title="${esc(v.title)}" loading="lazy" allowfullscreen></iframe>`:'<p>Enlace de YouTube no válido.</p>'}<h3>${esc(v.title)}</h3><p>${esc(v.description||'')}</p><button class="like" data-type="video" data-id="${v.id}">♡ Me gusta <span>…</span></button><span class="status"></span></article>`).join('');likes(el)}if($('#videos'))videoList($('#videos'));if($('#home-videos'))videoList($('#home-videos'),2);async function likes(root){if(!db)return;for(const b of root.querySelectorAll('.like')){const type=b.dataset.type,fk=type==='video'?'video_id':'story_id',table=type==='video'?'video_likes':'story_likes',id=b.dataset.id,span=b.querySelector('span'),status=b.parentElement.querySelector('.status');const {data:initialCount}=await db.rpc(type==='video'?'video_like_count':'story_like_count',type==='video'?{p_video_id:id}:{p_story_id:id});span.textContent=initialCount??0;b.onclick=async()=>{const {data:{user}}=await db.auth.getUser();if(!user){status.textContent='Inicia sesión para dar like.';return}b.disabled=true;const {data:old}=await db.from(table).select('id').eq(fk,id).eq('user_id',user.id).maybeSingle();let r;if(old){r=await db.from(table).delete().eq('id',old.id);b.classList.remove('on')}else{r=await db.from(table).insert({[fk]:id,user_id:user.id});b.classList.add('on')}if(r.error)status.textContent='No se pudo registrar el like.';const n=await db.rpc(type==='video'?'video_like_count':'story_like_count',type==='video'?{p_video_id:id}:{p_story_id:id});span.textContent=n.data??0;b.disabled=false}}}if($('#admin-list')){async function loadAdmin(){const el=$('#admin-list');if(!db){el.innerHTML=msg;return}const {data:{user}}=await db.auth.getUser();if(!user){el.innerHTML='<div class="empty">Inicia sesión primero en <a href="cuenta.html">Mi cuenta</a>.</div>';return}const status=$('#admin-status').value,{data,error}=await db.from('stories').select('*').eq('status',status).order('created_at').limit(100);if(error){el.innerHTML='<div class="empty">Sin permiso de moderación. Añade tu UUID a admin_users en Supabase.</div>';return}el.innerHTML=data.length?data.map(s=>`<article class="item"><span class="category">${esc(s.category)} · ${esc(s.author_name||'Anónimo')}</span><h3>${esc(s.title)}</h3><p>${esc(s.summary||'')}</p><div class="bodytext">${esc(s.body)}</div><div class="actions"><button data-state="published" data-id="${s.id}">Aprobar/publicar</button><button data-state="changes" data-id="${s.id}">Pedir cambios</button><button data-state="rejected" data-id="${s.id}">Rechazar</button></div></article>`).join(''):'<div class="empty">No hay relatos en esta lista.</div>';el.querySelectorAll('[data-state]').forEach(b=>b.onclick=async()=>{if(b.dataset.state==='published'&&!confirm('¿Publicar este relato?'))return;if(b.dataset.state==='rejected'&&!confirm('¿Rechazar este relato?'))return;const note=b.dataset.state==='changes'?prompt('¿Qué debe cambiar?')||'Se solicitan cambios.':null;const {error}=await db.rpc('moderate_story',{p_story_id:b.dataset.id,p_new_status:b.dataset.state,p_moderation_note:note});if(error)alert('No se pudo moderar. Verifica que tu usuario sea administrador y que ejecutaste schema.sql.');else loadAdmin()})}$('#refresh').onclick=loadAdmin;$('#admin-status').onchange=loadAdmin;loadAdmin()}})();
+(() => {
+  const cfg = window.UMBRAL_CONFIG;
+  const hasSupabase = !!(window.supabase && cfg && cfg.url && cfg.key);
+  const client = hasSupabase ? window.supabase.createClient(cfg.url, cfg.key) : null;
+  const $ = (selector, scope=document) => scope.querySelector(selector);
+  const $$ = (selector, scope=document) => [...scope.querySelectorAll(selector)];
+  const escapeHTML = (value='') => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const categories = ['Experiencia personal','Paranormal','Ficción','Leyenda urbana','Críptidos','Otro'];
+  const showStatus = (element, message, isError=false) => {
+    if (!element) return;
+    element.textContent = message;
+    element.classList.toggle('error', isError);
+    element.setAttribute('role','status');
+  };
+  const excerpt = (text, max=170) => {
+    const value = String(text || '').trim();
+    return value.length > max ? value.slice(0,max).trim() + '…' : value;
+  };
+  const dateText = value => {
+    if (!value) return '';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString('es-MX',{year:'numeric',month:'short',day:'numeric'});
+  };
+  function card(story) {
+    const title = escapeHTML(story.title || 'Relato sin título');
+    const summary = escapeHTML(story.summary || excerpt(story.body));
+    const category = escapeHTML(story.category || 'Relato');
+    const author = escapeHTML(story.author_name || 'Anónimo');
+    return `<article class="story-card"><span class="category">${category}</span><h3><a href="historia.html?id=${encodeURIComponent(story.id)}">${title}</a></h3><p>${summary}</p><div class="meta">${author}${story.created_at ? ' · '+escapeHTML(dateText(story.created_at)) : ''}</div><p><a class="textlink" href="historia.html?id=${encodeURIComponent(story.id)}">Leer relato →</a></p></article>`;
+  }
+  async function loadStories(target, limit=12, filters={}) {
+    if (!target) return;
+    if (!client) { target.innerHTML = '<p class="empty">No se pudo iniciar la conexión. Revisa config.js y vuelve a cargar la página.</p>'; return; }
+    target.innerHTML = '<p class="empty">Cargando relatos…</p>';
+    try {
+      let query = client.from('stories').select('id,title,summary,body,category,author_name,created_at,published_at,status').eq('status','published').order('published_at',{ascending:false}).limit(limit);
+      if (filters.category) query = query.eq('category',filters.category);
+      if (filters.search) query = query.or(`title.ilike.%${filters.search}%,summary.ilike.%${filters.search}%,body.ilike.%${filters.search}%`);
+      const {data,error} = await query;
+      if (error) throw error;
+      target.innerHTML = data && data.length ? data.map(card).join('') : '<p class="empty">Todavía no hay relatos publicados. ¿Te animas a compartir el primero?</p>';
+    } catch (error) {
+      console.error('Error al cargar relatos:', error);
+      target.innerHTML = '<p class="empty">No pudimos cargar los relatos. Comprueba la conexión con Supabase e inténtalo de nuevo.</p>';
+    }
+  }
+  async function initHome() {
+    await loadStories($('#recent-stories'),3);
+  }
+  async function initStories() {
+    const target = $('#stories-list');
+    if (!target) return;
+    const search = $('#story-search');
+    const category = $('#story-category');
+    const refresh = () => loadStories(target,60,{search:search?.value.trim() || '',category:category?.value || ''});
+    search?.addEventListener('input',refresh);
+    category?.addEventListener('change',refresh);
+    await refresh();
+  }
+  async function initStory() {
+    const target = $('#story-content');
+    if (!target) return;
+    const id = new URLSearchParams(location.search).get('id');
+    if (!id) { target.innerHTML='<p class="empty">No se indicó qué relato abrir. Vuelve a la biblioteca.</p>'; return; }
+    try {
+      const {data,error}=await client.from('stories').select('title,body,category,author_name,created_at,published_at,status').eq('id',id).eq('status','published').single();
+      if(error) throw error;
+      document.title = `${data.title} | Umbral`;
+      target.innerHTML=`<article class="reading"><p class="eyebrow">${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><p class="meta">Por ${escapeHTML(data.author_name || 'Anónimo')} · ${escapeHTML(dateText(data.published_at || data.created_at))}</p><div class="bodytext">${escapeHTML(data.body)}</div><p><a class="textlink" href="historias.html">← Volver a historias</a></p></article>`;
+    } catch(e) {
+      console.error(e);
+      target.innerHTML='<p class="empty">No encontramos ese relato publicado. Puede que el enlace sea incorrecto o que el relato ya no esté disponible.</p>';
+    }
+  }
+  async function initSubmit() {
+    const form = $('#story-form');
+    if (!form) return;
+    const status = $('#form-status');
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!client) { showStatus(status,'No se pudo conectar con Supabase. Revisa config.js.',true); return; }
+      const fd = new FormData(form);
+      const title = String(fd.get('title') || '').trim();
+      const body = String(fd.get('body') || '').trim();
+      const author = String(fd.get('author_name') || '').trim() || 'Anónimo';
+      const summary = String(fd.get('summary') || '').trim();
+      const category = String(fd.get('category') || 'Experiencia personal');
+      const consent = fd.get('consent') === 'on';
+      if (title.length < 5 || title.length > 120) { showStatus(status,'El título debe tener entre 5 y 120 caracteres.',true); return; }
+      if (body.length < 80 || body.length > 20000) { showStatus(status,'El relato debe tener entre 80 y 20,000 caracteres.',true); return; }
+      if (summary.length > 280) { showStatus(status,'El resumen no puede superar 280 caracteres.',true); return; }
+      if (!categories.includes(category)) { showStatus(status,'Selecciona una categoría válida.',true); return; }
+      if (!consent) { showStatus(status,'Debes aceptar las normas y confirmar que puedes compartir este relato.',true); return; }
+      const {data:authData} = await client.auth.getUser();
+      const payload = {title,body,author_name:author,summary:summary || null,category,consent:true,status:'pending',author_id:authData?.user?.id || null};
+      const button = $('button[type="submit"]',form);
+      if(button) button.disabled=true;
+      showStatus(status,'Enviando tu relato…');
+      try {
+        const {error}=await client.from('stories').insert(payload);
+        if(error) throw error;
+        form.reset();
+        showStatus(status,'¡Relato enviado! Quedó pendiente de revisión antes de publicarse.');
+      } catch(e) {
+        console.error(e);
+        showStatus(status,'No se pudo enviar. Revisa la configuración y las políticas de Supabase. Detalle: '+(e.message || 'error desconocido'),true);
+      } finally { if(button) button.disabled=false; }
+    });
+  }
+  async function initAccount() {
+    const loginForm=$('#login-form'), signupForm=$('#signup-form'), logout=$('#logout-button'), status=$('#account-status'), signed=$('#signed-in');
+    if (!loginForm && !signupForm && !logout) return;
+    if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
+    async function refresh(){
+      const {data:{user}}=await client.auth.getUser();
+      if(signed) signed.textContent=user ? `Sesión iniciada: ${user.email}` : 'No has iniciado sesión.';
+      if(logout) logout.classList.toggle('hidden',!user);
+    }
+    loginForm?.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(loginForm);const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});if(error)showStatus(status,error.message,true);else{showStatus(status,'Sesión iniciada correctamente.');await refresh();}});
+    signupForm?.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(signupForm);const {error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password')});if(error)showStatus(status,error.message,true);else showStatus(status,'Cuenta creada. Si Supabase solicita confirmación por correo, revisa tu bandeja antes de iniciar sesión.');});
+    logout?.addEventListener('click',async()=>{await client.auth.signOut();showStatus(status,'Sesión cerrada.');await refresh();});
+    await refresh();
+  }
+  async function initAdmin() {
+    const target=$('#admin-stories'), status=$('#admin-status'), login=$('#admin-login');
+    if(!target && !login) return;
+    if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
+    async function refresh(){
+      const {data:{user}}=await client.auth.getUser();
+      if(!user){target && (target.innerHTML='<p class="empty">Inicia sesión con una cuenta autorizada como administradora.</p>');return;}
+      const {data:admin,error:adminError}=await client.from('admin_users').select('user_id').eq('user_id',user.id).maybeSingle();
+      if(adminError || !admin){target && (target.innerHTML='<p class="empty">Esta cuenta no tiene permisos de administración.</p>');return;}
+      const {data,error}=await client.from('stories').select('id,title,author_name,category,status,created_at').order('created_at',{ascending:false}).limit(100);
+      if(error){target.innerHTML='<p class="empty">No se pudieron cargar los relatos. Revisa las políticas RLS.</p>';return;}
+      target.innerHTML=(data||[]).map(s=>`<div class="item"><p class="meta">${escapeHTML(s.status)} · ${escapeHTML(s.category)} · ${escapeHTML(s.author_name)}</p><h3>${escapeHTML(s.title)}</h3><div class="actions-row">${['published','changes','rejected'].map(st=>`<button data-id="${escapeHTML(s.id)}" data-status="${st}">${st==='published'?'Publicar':st==='changes'?'Solicitar cambios':'Rechazar'}</button>`).join('')}</div></div>`).join('') || '<p class="empty">No hay relatos enviados.</p>';
+      $$('button[data-id]',target).forEach(btn=>btn.addEventListener('click',async()=>{const {error}=await client.from('stories').update({status:btn.dataset.status,published_at:btn.dataset.status==='published'?new Date().toISOString():null,updated_at:new Date().toISOString()}).eq('id',btn.dataset.id);if(error){showStatus(status,'No se pudo actualizar: '+error.message,true);}else{showStatus(status,'Estado actualizado.');await refresh();}}));
+    }
+    login?.addEventListener('click',async()=>{const {data:{user}}=await client.auth.getUser();if(!user){showStatus(status,'Primero inicia sesión en Mi cuenta.',true);return;}await refresh();});
+    await refresh();
+  }
+  async function initVideos(){
+    const videos=$('#video-list');
+    if(!videos)return;
+    const ids=$$(' [data-youtube-id]',videos);
+    ids.forEach(el=>{const id=el.dataset.youtubeId;if(/^[A-Za-z0-9_-]{11}$/.test(id)){el.innerHTML=`<iframe loading="lazy" src="https://www.youtube-nocookie.com/embed/${id}" title="Video de terror de YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;}});
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    initHome();initStories();initStory();initSubmit();initAccount();initAdmin();initVideos();
+  });
+})();
