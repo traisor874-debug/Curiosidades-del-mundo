@@ -76,7 +76,20 @@
       const {data,error}=await client.from('stories').select('title,body,category,author_name,created_at,published_at,status').eq('id',id).eq('status','published').single();
       if(error) throw error;
       document.title = `${data.title} | D’Asombro`;
-      target.innerHTML=`<article class="story-scene"><div class="story-masthead"><p class="eyebrow">ARCHIVO D’ASOMBRO · ${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><div class="story-byline"><span>Por ${escapeHTML(data.author_name || "Anónimo")}</span><span>${escapeHTML(dateText(data.published_at || data.created_at))}</span><span>Lectura</span></div></div><section class="reading-panel"><div class="bodytext">${escapeHTML(data.body)}</div></section><div class="story-end"><a class="textlink" href="historias.html">← Volver a la biblioteca</a><span class="meta">Cada historia deja algo detrás.</span></div></article>`;
+      const storyUrl='historia.html?id='+encodeURIComponent(id);
+      const entry={id,title:data.title,url:storyUrl,date:dateText(data.published_at||data.created_at),image:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=320&h=240&q=80'};
+      try{const history=JSON.parse(localStorage.getItem('dasombro_history')||'[]').filter(x=>x.id!==id);history.unshift(entry);localStorage.setItem('dasombro_history',JSON.stringify(history.slice(0,30)));}catch(_){}
+      let favorites=[];try{favorites=JSON.parse(localStorage.getItem('dasombro_favorites')||'[]')}catch(_){}
+      const isSaved=favorites.some(x=>x.id===id);
+      target.innerHTML=`<article class="story-scene"><div class="story-masthead"><p class="eyebrow">ARCHIVO D’ASOMBRO · ${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><div class="story-byline"><span>Por ${escapeHTML(data.author_name || "Anónimo")}</span><span>${escapeHTML(dateText(data.published_at || data.created_at))}</span><button type="button" id="story-favorite-toggle" aria-pressed="${isSaved}">${isSaved?'★ Guardado':'☆ Guardar en favoritos'}</button></div></div><section class="reading-panel"><div class="bodytext">${escapeHTML(data.body)}</div></section><div class="story-end"><a class="textlink" href="historias.html">← Volver a la biblioteca</a><span class="meta">Cada historia deja algo detrás.</span></div></article>`;
+      $('#story-favorite-toggle')?.addEventListener('click',event=>{
+        let saved=[];try{saved=JSON.parse(localStorage.getItem('dasombro_favorites')||'[]')}catch(_){}
+        const exists=saved.some(x=>x.id===id);
+        saved=exists?saved.filter(x=>x.id!==id):[entry,...saved];
+        localStorage.setItem('dasombro_favorites',JSON.stringify(saved));
+        event.currentTarget.setAttribute('aria-pressed',String(!exists));
+        event.currentTarget.textContent=exists?'☆ Guardar en favoritos':'★ Guardado';
+      });
     } catch(e) {
       console.error(e);
       target.innerHTML='<p class="empty">No encontramos ese relato publicado. Puede que el enlace sea incorrecto o que el relato ya no esté disponible.</p>';
