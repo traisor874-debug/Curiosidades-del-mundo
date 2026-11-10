@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="D’Asombro: historias sorprendentes, inquietantes y extraordinarias de la comunidad.">
 <title>Mi cuenta | D’Asombro</title>
-<link rel="stylesheet" href="styles.css?v=7">
+<link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body class="section-cuenta">
 <header class="site-header">
@@ -13,9 +13,59 @@
 <nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html" aria-current="page">Mi cuenta</a></nav>
 </header>
 
-<main class="page"><p class="eyebrow">TU ESPACIO</p><h1>Mi cuenta</h1><p class="leadpage">Puedes enviar relatos de forma anónima. Si quieres una cuenta, regístrate o inicia sesión aquí.</p><p id="signed-in" class="notice">Comprobando sesión…</p><div class="form-layout"><form id="login-form" class="form"><h2>Iniciar sesión</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password" minlength="6"></label><button class="button" type="submit">Entrar</button></form><form id="signup-form" class="form"><h2>Crear cuenta</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña (mínimo 6 caracteres)<input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button" type="submit">Crear cuenta</button></form></div><p id="account-status" class="status" aria-live="polite"></p><button id="logout-button" class="button hidden" type="button">Cerrar sesión</button></main>
+<main class="page account-page">
+    <p class="eyebrow">TU ESPACIO · PERFIL DE AUTOR</p>
+    <h1>Mi cuenta</h1>
+    <p class="leadpage">Tu rincón en D’Asombro. Administra tu identidad y sigue el recorrido de tus relatos.</p>
+    <p id="signed-in" class="notice">Comprobando sesión…</p>
+    <section id="account-dashboard" class="account-dashboard hidden">
+      <div class="profile-panel">
+        <div class="profile-heading">
+          <div id="profile-avatar-preview" class="avatar-preview" aria-hidden="true">◈</div>
+          <div><p class="eyebrow">IDENTIDAD DEL ARCHIVO</p><h2 id="profile-display-name">Tu perfil</h2><p id="profile-email" class="meta"></p></div>
+        </div>
+        <form id="profile-form" class="profile-form">
+          <label>Nombre de usuario<input id="profile-name" name="display_name" maxlength="24" minlength="3" placeholder="¿Cómo te conocerá la comunidad?" required></label>
+          <fieldset class="avatar-picker"><legend>Elige tu avatar</legend><p class="meta">Avatares prediseñados. No se permiten fotografías ni imágenes externas.</p><div id="avatar-options" class="avatar-options">
+            <label><input type="radio" name="avatar" value="moon"><span class="avatar-choice avatar-moon">☾</span></label>
+            <label><input type="radio" name="avatar" value="eye"><span class="avatar-choice avatar-eye">◉</span></label>
+            <label><input type="radio" name="avatar" value="ghost"><span class="avatar-choice avatar-ghost">♙</span></label>
+            <label><input type="radio" name="avatar" value=" raven"><span class="avatar-choice avatar-raven">♟</span></label>
+            <label><input type="radio" name="avatar" value="star"><span class="avatar-choice avatar-star">✦</span></label>
+            <label><input type="radio" name="avatar" value="mask"><span class="avatar-choice avatar-mask">◈</span></label>
+            <label><input type="radio" name="avatar" value="spiral"><span class="avatar-choice avatar-spiral">◎</span></label>
+            <label><input type="radio" name="avatar" value="key"><span class="avatar-choice avatar-key">⚿</span></label>
+          </div></fieldset>
+          <button class="button" type="submit">Guardar perfil</button>
+        </form>
+      </div>
+      <section class="activity-panel">
+        <div class="activity-heading"><div><p class="eyebrow">TU ACTIVIDAD</p><h2>Mis relatos</h2></div><span id="story-total" class="activity-total">0</span></div>
+        <div class="story-stats">
+          <div><strong id="count-pending">0</strong><span>Por revisar</span></div>
+          <div><strong id="count-changes">0</strong><span>Por corregir</span></div>
+          <div><strong id="count-published">0</strong><span>Publicados</span></div>
+          <div><strong id="count-rejected">0</strong><span>No aceptados</span></div>
+        </div>
+        <div class="account-tabs" role="tablist" aria-label="Filtrar mis relatos">
+          <button type="button" class="active" data-account-filter="all">Todos</button>
+          <button type="button" data-account-filter="pending">Por revisar</button>
+          <button type="button" data-account-filter="changes">Por corregir</button>
+          <button type="button" data-account-filter="published">Publicados</button>
+          <button type="button" data-account-filter="rejected">No aceptados</button>
+        </div>
+        <div id="my-stories" class="my-stories"><p class="empty">Cargando tus relatos…</p></div>
+      </section>
+      <div class="account-actions"><a class="textlink" href="enviar.html">＋ Enviar otro relato</a><button id="logout-button" class="button button-quiet" type="button">Cerrar sesión</button></div>
+    </section>
+    <div id="auth-forms" class="form-layout">
+      <form id="login-form" class="form"><h2>Iniciar sesión</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password" minlength="6"></label><button class="button" type="submit">Entrar</button></form>
+      <form id="signup-form" class="form"><h2>Crear cuenta</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña (mínimo 6 caracteres)<input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button" type="submit">Crear cuenta</button></form>
+    </div>
+    <p id="account-status" class="status" aria-live="polite"></p>
+  </main>
 
 <footer class="site-footer"><a class="brand" href="index.html"><strong>D’ASOMBRO</strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a><p>Historias compartidas por la comunidad. Cada historia deja algo detrás.</p><nav><a href="normas.html">Normas</a><a href="privacidad.html">Privacidad</a><a href="admin.html">Administración</a></nav></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="app.js?v=4"></script>
+<script src="config.js"></script><script src="app.js?v=8"></script>
 </body></html>
