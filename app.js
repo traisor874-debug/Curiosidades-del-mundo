@@ -124,102 +124,93 @@
     const dashboard=$('#account-dashboard'), authForms=$('#auth-forms'), profileForm=$('#profile-form'), storiesTarget=$('#my-stories');
     if (!loginForm && !signupForm && !logout) return;
     if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
-    const avatars={portrait1:'photo-1500648767791-00dcc994a43e',portrait2:'photo-1534528741775-53994a69daeb',portrait3:'photo-1506794778202-cad84cf45f1d',portrait4:'photo-1531123897727-8f129e1688ce',portrait5:'photo-1507003211169-0a1dd7228f2d',portrait6:'photo-1524504388940-b1c1722653e1',portrait7:'photo-1504593811423-6dd665756598',portrait8:'photo-1535713875002-d1d0cf377fde'};
-    let ownStories=[];
-    let activeFilter='all';
+    const avatarFiles={
+      window:'photo-1519608487953-e999c86e7455',forest:'photo-1448375240586-882707db888b',raven:'photo-1549608276-5786777e6587',
+      radio:'photo-1593078166036-9e3c4c7b9c5a',lighthouse:'photo-1500530855697-b586d89ba3ee',silhouette:'photo-1518837695005-2083093ee35b',
+      portrait1:'photo-1519608487953-e999c86e7455',portrait2:'photo-1448375240586-882707db888b',portrait3:'photo-1549608276-5786777e6587',
+      portrait4:'photo-1593078166036-9e3c4c7b9c5a',portrait5:'photo-1500530855697-b586d89ba3ee',portrait6:'photo-1518837695005-2083093ee35b',
+      portrait7:'photo-1448375240586-882707db888b',portrait8:'photo-1519608487953-e999c86e7455'
+    };
+    const imageUrl=(id,size=300)=>'https://images.unsplash.com/'+(avatarFiles[id]||avatarFiles.window)+'?auto=format&fit=crop&w='+size+'&h='+size+'&q=85';
+    let ownStories=[],activeFilter='all';
     function renderOwnStories(){
       const rows=ownStories.filter(s=>activeFilter==='all'||s.status===activeFilter);
       if(!storiesTarget)return;
       if(!rows.length){storiesTarget.innerHTML='<div class="empty account-empty">No hay relatos en esta categoría todavía. <a href="enviar.html">Comparte tu primera historia →</a></div>';return;}
-      storiesTarget.innerHTML=rows.map(s=>{
-        const labels={pending:'En revisión',changes:'Necesita correcciones',published:'Publicado',rejected:'No aceptado'};
+      const art=['photo-1518709268805-4e9042af9f23','photo-1519608487953-e999c86e7455','photo-1448375240586-882707db888b'];
+      storiesTarget.innerHTML=rows.map((s,i)=>{
+        const labels={pending:'⌛ Por revisar',changes:'✎ Por corregir',published:'✓ Publicado',rejected:'× No aceptado'};
         const notes=s.moderation_note?'<p class="moderation-note">'+escapeHTML(s.moderation_note)+'</p>':'';
-        return '<article class="my-story"><div class="my-story-top"><span class="story-state state-'+escapeHTML(s.status)+'">'+(labels[s.status]||escapeHTML(s.status))+'</span><span class="meta">'+escapeHTML(dateText(s.created_at))+'</span></div><h3>'+escapeHTML(s.title)+'</h3><p class="meta">'+escapeHTML(s.category)+'</p>'+notes+(s.status==='published'?'<a class="textlink" href="historia.html?id='+encodeURIComponent(s.id)+'">Ver publicado →</a>':'')+'</article>';
+        return '<article class="my-story"><img class="my-story-art" src="https://images.unsplash.com/'+art[i%art.length]+'?auto=format&fit=crop&w=320&h=240&q=80" alt="" loading="lazy"><div class="my-story-copy"><h3>'+escapeHTML(s.title)+'</h3><p class="meta"><span class="category">'+escapeHTML(s.category)+'</span>　▦　'+escapeHTML(dateText(s.created_at))+'</p>'+notes+(s.status==='published'?'<a class="textlink" href="historia.html?id='+encodeURIComponent(s.id)+'">Abrir relato →</a>':'')+'</div><span class="story-state state-'+escapeHTML(s.status)+'">'+(labels[s.status]||escapeHTML(s.status))+'</span></article>';
       }).join('');
+    }
+    function renderSavedList(target,key,emptyText){
+      if(!target)return;
+      let rows=[];try{rows=JSON.parse(localStorage.getItem(key)||'[]')}catch(_){}
+      if(!rows.length){target.innerHTML='<p class="empty">'+emptyText+'</p>';return;}
+      target.innerHTML=rows.map(row=>'<article class="my-story"><img class="my-story-art" src="'+escapeHTML(row.image||'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=320&h=240&q=80')+'" alt=""><div class="my-story-copy"><h3>'+escapeHTML(row.title||'Relato')+'</h3><p class="meta">'+escapeHTML(row.date||'')+'</p><a class="textlink" href="'+escapeHTML(row.url||'historias.html')+'">Continuar leyendo →</a></div></article>').join('');
+    }
+    function setProfile(user){
+      const meta=user.user_metadata||{},name=meta.display_name||meta.full_name||meta.name||user.email?.split('@')[0]||'Autor';
+      const avatar=avatarFiles[meta.avatar_id]?meta.avatar_id:'window';
+      $('#profile-display-name').textContent=name;$('#profile-email').textContent=user.email||'';
+      $('#profile-name').value=meta.display_name||name;$('#profile-avatar-preview').innerHTML='<img src="'+imageUrl(avatar)+'" alt="">';
+      $$('input[name="avatar"]').forEach(input=>{input.checked=input.value===avatar;});
+      $$('[data-avatar-choice]').forEach(button=>button.classList.toggle('active',button.dataset.avatarChoice===avatar));
+    }
+    function showView(view){
+      $$('[data-account-view]').forEach(button=>button.classList.toggle('active',button.dataset.accountView===view));
+      $$('.account-view').forEach(section=>section.classList.toggle('hidden',section.id!=='view-'+view));
+      if(view==='favorites')renderSavedList($('#favorite-stories'),'dasombro_favorites','Todavía no has guardado relatos favoritos.');
+      if(view==='history')renderSavedList($('#reading-history'),'dasombro_history','Aún no hay lecturas recientes.');
     }
     async function loadOwnStories(user){
       if(!storiesTarget)return;
       storiesTarget.innerHTML='<p class="empty">Buscando tus relatos…</p>';
       try{
         const {data,error}=await client.from('stories').select('id,title,category,status,created_at,moderation_note').eq('author_id',user.id).order('created_at',{ascending:false}).limit(100);
-        if(error)throw error;
-        ownStories=data||[];
+        if(error)throw error;ownStories=data||[];
         const count=key=>ownStories.filter(s=>s.status===key).length;
-        $('#story-total').textContent=String(ownStories.length);
-        $('#count-pending').textContent=String(count('pending'));
-        $('#count-changes').textContent=String(count('changes'));
-        $('#count-published').textContent=String(count('published'));
-        $('#count-rejected').textContent=String(count('rejected'));
+        $('#story-total').textContent=String(ownStories.length);$('#count-pending').textContent=String(count('pending'));
+        $('#count-changes').textContent=String(count('changes'));$('#count-published').textContent=String(count('published'));
         renderOwnStories();
-      }catch(error){
-        console.error('No se pudieron cargar los relatos de la cuenta:',error);
-        storiesTarget.innerHTML='<p class="empty">No se pudieron consultar tus relatos. Es posible que falte una política de lectura para que cada usuario vea únicamente sus propios envíos. Tus relatos no se han modificado.</p>';
-      }
-    }
-    function setProfile(user){
-      const meta=user.user_metadata||{};
-      const name=meta.display_name||meta.full_name||meta.name||user.email?.split('@')[0]||'Autor';
-      const avatar=avatars[meta.avatar_id]||avatars.portrait1;
-      $('#profile-display-name').textContent=name;
-      $('#profile-email').textContent=user.email||'';
-      $('#profile-name').value=meta.display_name||'';
-      $('#profile-avatar-preview').innerHTML='<img src="https://images.unsplash.com/'+avatar+'?auto=format&fit=crop&w=240&h=240&q=90" alt="">';
-      $$('input[name="avatar"]').forEach(input=>{input.checked=input.value.trim()===meta.avatar_id;});
+      }catch(error){console.error('No se pudieron cargar los relatos de la cuenta:',error);storiesTarget.innerHTML='<p class="empty">No se pudieron consultar tus relatos. Es posible que falte una política de lectura para que cada usuario vea únicamente sus propios envíos. Tus relatos no se han modificado.</p>';}
     }
     async function refresh(){
       try{
-        const {data,error}=await client.auth.getSession();
-        if(error)throw error;
+        const {data,error}=await client.auth.getSession();if(error)throw error;
         const user=data?.session?.user||null;
-        if(signed)signed.textContent=user?'Sesión iniciada':'No has iniciado sesión.';
-        dashboard?.classList.toggle('hidden',!user);
-        authForms?.classList.toggle('hidden',!!user);
-        if(user){
-          setProfile(user);
-          await loadOwnStories(user);
-        }
+        if(signed)signed.textContent=user?'':'No has iniciado sesión.';
+        signed?.classList.toggle('hidden',!!user);dashboard?.classList.toggle('hidden',!user);authForms?.classList.toggle('hidden',!!user);
+        if(user){setProfile(user);await loadOwnStories(user);}
         return user;
-      }catch(error){
-        console.error(error);
-        if(signed)signed.textContent='No se pudo comprobar tu sesión.';
-        showStatus(status,error.message||'No se pudo comprobar la sesión.',true);
-        return null;
-      }
+      }catch(error){console.error(error);if(signed)signed.textContent='No se pudo comprobar tu sesión.';showStatus(status,error.message||'No se pudo comprobar la sesión.',true);return null;}
     }
     profileForm?.addEventListener('submit',async e=>{
-      e.preventDefault();
-      const name=$('#profile-name').value.trim();
-      const avatar=document.querySelector('input[name="avatar"]:checked')?.value.trim();
+      e.preventDefault();const name=$('#profile-name').value.trim(),avatar=document.querySelector('input[name="avatar"]:checked')?.value;
       if(name.length<3||name.length>24){showStatus(status,'El nombre debe tener entre 3 y 24 caracteres.',true);return;}
-      if(!avatar||!avatars[avatar]){showStatus(status,'Elige uno de los avatares disponibles.',true);return;}
+      if(!avatar||!avatarFiles[avatar]){showStatus(status,'Elige uno de los avatares disponibles.',true);return;}
       const button=$('button[type="submit"]',profileForm);if(button)button.disabled=true;
-      try{
-        const {data,error}=await client.auth.updateUser({data:{display_name:name,avatar_id:avatar}});
-        if(error)throw error;
-        if(data?.user)setProfile(data.user);
-        showStatus(status,'Tu perfil se guardó correctamente.');
-      }catch(error){showStatus(status,error.message||'No se pudo guardar el perfil.',true);}
-      finally{if(button)button.disabled=false;}
+      try{const {data,error}=await client.auth.updateUser({data:{display_name:name,avatar_id:avatar}});if(error)throw error;if(data?.user)setProfile(data.user);profileForm.classList.add('hidden');showStatus(status,'Tu perfil se guardó correctamente.');}
+      catch(error){showStatus(status,error.message||'No se pudo guardar el perfil.',true);}finally{if(button)button.disabled=false;}
     });
-    $$('[data-account-filter]').forEach(button=>button.addEventListener('click',()=>{
-      activeFilter=button.dataset.accountFilter;
-      $$('[data-account-filter]').forEach(item=>item.classList.toggle('active',item===button));
-      renderOwnStories();
+    $('#edit-profile-toggle')?.addEventListener('click',()=>profileForm?.classList.toggle('hidden'));
+    $('#cancel-profile-edit')?.addEventListener('click',()=>profileForm?.classList.add('hidden'));
+    $('#show-avatar-editor')?.addEventListener('click',()=>{profileForm?.classList.remove('hidden');profileForm?.scrollIntoView({behavior:'smooth',block:'center'});});
+    $$('[data-avatar-choice]').forEach(button=>button.addEventListener('click',()=>{
+      const input=$('input[name="avatar"][value="'+button.dataset.avatarChoice+'"]');
+      if(input){input.checked=true;$$('[data-avatar-choice]').forEach(b=>b.classList.toggle('active',b===button));}
+      profileForm?.classList.remove('hidden');profileForm?.scrollIntoView({behavior:'smooth',block:'center'});
     }));
-    loginForm?.addEventListener('submit',async e=>{
-      e.preventDefault();const button=$('button[type="submit"]',loginForm);if(button)button.disabled=true;
-      try{const fd=new FormData(loginForm);const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});if(error)throw error;showStatus(status,'Sesión iniciada correctamente.');await refresh();}
-      catch(error){showStatus(status,error.message||'No se pudo iniciar sesión.',true);}finally{if(button)button.disabled=false;}
-    });
-    signupForm?.addEventListener('submit',async e=>{
-      e.preventDefault();const button=$('button[type="submit"]',signupForm);if(button)button.disabled=true;
-      try{const fd=new FormData(signupForm);const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password'),options:{data:{display_name:'',avatar_id:'portrait1'}}});if(error)throw error;showStatus(status,data?.session?'Cuenta creada. Completa tu perfil.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.');if(data?.session)await refresh();}
-      catch(error){showStatus(status,error.message||'No se pudo crear la cuenta.',true);}finally{if(button)button.disabled=false;}
-    });
-    logout?.addEventListener('click',async()=>{
-      try{const {error}=await client.auth.signOut();if(error)throw error;showStatus(status,'Sesión cerrada.');await refresh();}
-      catch(error){showStatus(status,error.message||'No se pudo cerrar la sesión.',true);}
-    });
+    $$('[data-account-filter]').forEach(button=>button.addEventListener('click',()=>{
+      activeFilter=button.dataset.accountFilter;$$('[data-account-filter]').forEach(item=>item.classList.toggle('active',item===button));renderOwnStories();
+    }));
+    $$('[data-account-view]').forEach(button=>button.addEventListener('click',()=>showView(button.dataset.accountView)));
+    $('#clear-history')?.addEventListener('click',()=>{localStorage.removeItem('dasombro_history');renderSavedList($('#reading-history'),'dasombro_history','Aún no hay lecturas recientes.');});
+    $('#notifications-setting')?.addEventListener('click',()=>showStatus(status,'Las notificaciones se mostrarán aquí cuando haya novedades sobre tus relatos.'));
+    loginForm?.addEventListener('submit',async e=>{e.preventDefault();const button=$('button[type="submit"]',loginForm);if(button)button.disabled=true;try{const fd=new FormData(loginForm);const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});if(error)throw error;showStatus(status,'Sesión iniciada correctamente.');await refresh();}catch(error){showStatus(status,error.message||'No se pudo iniciar sesión.',true);}finally{if(button)button.disabled=false;}});
+    signupForm?.addEventListener('submit',async e=>{e.preventDefault();const button=$('button[type="submit"]',signupForm);if(button)button.disabled=true;try{const fd=new FormData(signupForm);const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password'),options:{data:{display_name:'',avatar_id:'window'}}});if(error)throw error;showStatus(status,data?.session?'Cuenta creada. Completa tu perfil.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.');if(data?.session)await refresh();}catch(error){showStatus(status,error.message||'No se pudo crear la cuenta.',true);}finally{if(button)button.disabled=false;}});
+    logout?.addEventListener('click',async()=>{try{const {error}=await client.auth.signOut();if(error)throw error;showStatus(status,'Sesión cerrada.');await refresh();}catch(error){showStatus(status,error.message||'No se pudo cerrar la sesión.',true);}});
     await refresh();
   }
   async function initAdmin() {
