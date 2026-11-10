@@ -75,3 +75,38 @@ body{background:radial-gradient(ellipse at 50% -12%,#292116 0,transparent 42%),l
 .library-page>#stories-list{margin-top:24px}
 .library-page .story-card{min-height:270px;padding:28px}
 @media(max-width:780px){.discover-strip{margin:12px 0 45px;padding:35px 22px}.discover-grid{grid-template-columns:1fr}.discover-tile{min-height:170px}.library-intro{padding-top:65px;padding-bottom:34px}.library-intro h1{font-size:clamp(2.8rem,12vw,4.3rem)}.library-note{gap:8px;flex-direction:column}.library-page>.filters{margin-top:24px}}
+
+/* D'ASOMBRO art direction: psychological mystery, not luxury editorial */
+:root{--bg:#080a0d;--panel:#101419;--panel2:#151b20;--ink:#e8e9e7;--muted:#a2a8aa;--gold:#9a7770;--gold2:#c4a29a;--line:#293137}
+body{background:radial-gradient(ellipse at 78% 8%,#17232a 0,transparent 34%),radial-gradient(ellipse at 10% 60%,#160f13 0,transparent 36%),#080a0d}
+.brand strong{color:#c4a29a}
+.eyebrow,.story-card .category{color:#b68b82}
+.button{background:#9c7169;border-color:#9c7169;color:#08090b}
+.button:hover{background:#c19a90;color:#08090b}
+.textlink{color:#c4a29a}
+.hero{position:relative;gap:38px;min-height:660px}
+.hero>div:first-child{position:relative;z-index:2}
+.hero h1{max-width:620px;text-shadow:0 5px 35px #000}
+.hero h1 em{color:#c4a29a}
+.hero>div:first-child>p:not(.eyebrow){color:#c0c7c8;max-width:510px}
+.heroimg{min-height:560px;border:1px solid #3d4549;background-image:linear-gradient(180deg,rgba(3,5,7,.04),rgba(3,5,7,.28) 40%,#080a0d 100%),linear-gradient(90deg,#080a0d55,transparent 55%),url('https://cristicruceanu.com/cdn/shop/articles/psychological-horror_96243c8a-9790-4767-b755-6f2abb96c625.png?v=1780309632&width=1100');background-position:center;background-size:cover;box-shadow:0 25px 90px #000b;filter:saturate(.72) contrast(1.12)}
+.heroimg:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080a0d33,transparent 45%),radial-gradient(ellipse at 50% 50%,transparent 15%,#0008 100%);pointer-events:none}
+.heroimg:after{content:"NO TODAS LAS PUERTAS DEBERÍAN ABRIRSE";left:22px;bottom:24px;color:#d4c6c3;text-shadow:0 2px 8px #000;letter-spacing:.2em}
+.ticker{background:#0d1115;border-color:#30383d;color:#a8b1b3}
+.discover-strip{border-color:#384148}
+.discover-strip h2{color:#e4e7e6}
+.discover-tile{border-color:#3c454a;background-color:#0b1014}
+.discover-tile span{color:#c4a29a}
+.discover-tile.paranormal:after{background-image:linear-gradient(#0004,#0008),url('https://res.cloudinary.com/jerrick/image/upload/v1699721355/654fb08a3ee3b9001dc1e8ea.jpg')}
+.discover-tile.mystery:after{background-image:linear-gradient(#0004,#0008),url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=85')}
+.discover-tile.experiences:after{background-image:linear-gradient(#0004,#0008),url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80')}
+.story-card{background:linear-gradient(145deg,#151b20,#0c1014);border-color:#303a40}
+.story-card:before{background:linear-gradient(90deg,transparent,#9b7770,transparent)}
+@media(max-width:780px){
+ .hero{padding-top:48px;gap:22px}
+ .hero h1{font-size:clamp(3rem,12.4vw,4.2rem);line-height:1.01}
+ .heroimg{min-height:430px;background-position:center 48%;border-color:#3b454b}
+ .actions{gap:10px}
+ .actions .button{padding:14px 16px}
+ .discover-tile{min-height:190px}
+}
