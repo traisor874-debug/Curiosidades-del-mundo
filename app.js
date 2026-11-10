@@ -124,7 +124,7 @@
     const dashboard=$('#account-dashboard'), authForms=$('#auth-forms'), profileForm=$('#profile-form'), storiesTarget=$('#my-stories');
     if (!loginForm && !signupForm && !logout) return;
     if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
-    const avatars={moon:'☾',eye:'◉',ghost:'♙',raven:'♟',star:'✦',mask:'◈',spiral:'◎',key:'⚿'};
+    const avatars={portrait1:'photo-1500648767791-00dcc994a43e',portrait2:'photo-1534528741775-53994a69daeb',portrait3:'photo-1506794778202-cad84cf45f1d',portrait4:'photo-1531123897727-8f129e1688ce',portrait5:'photo-1507003211169-0a1dd7228f2d',portrait6:'photo-1524504388940-b1c1722653e1',portrait7:'photo-1504593811423-6dd665756598',portrait8:'photo-1535713875002-d1d0cf377fde'};
     let ownStories=[];
     let activeFilter='all';
     function renderOwnStories(){
@@ -158,12 +158,12 @@
     }
     function setProfile(user){
       const meta=user.user_metadata||{};
-      const name=meta.display_name||'Autor sin nombre';
-      const avatar=avatars[meta.avatar_id]||avatars.moon;
+      const name=meta.display_name||meta.full_name||meta.name||user.email?.split('@')[0]||'Autor';
+      const avatar=avatars[meta.avatar_id]||avatars.portrait1;
       $('#profile-display-name').textContent=name;
       $('#profile-email').textContent=user.email||'';
       $('#profile-name').value=meta.display_name||'';
-      $('#profile-avatar-preview').textContent=avatar;
+      $('#profile-avatar-preview').innerHTML='<img src="https://images.unsplash.com/'+avatar+'?auto=format&fit=crop&w=240&h=240&q=90" alt="">';
       $$('input[name="avatar"]').forEach(input=>{input.checked=input.value.trim()===meta.avatar_id;});
     }
     async function refresh(){
@@ -213,7 +213,7 @@
     });
     signupForm?.addEventListener('submit',async e=>{
       e.preventDefault();const button=$('button[type="submit"]',signupForm);if(button)button.disabled=true;
-      try{const fd=new FormData(signupForm);const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password'),options:{data:{display_name:'',avatar_id:'moon'}}});if(error)throw error;showStatus(status,data?.session?'Cuenta creada. Completa tu perfil.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.');if(data?.session)await refresh();}
+      try{const fd=new FormData(signupForm);const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password'),options:{data:{display_name:'',avatar_id:'portrait1'}}});if(error)throw error;showStatus(status,data?.session?'Cuenta creada. Completa tu perfil.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.');if(data?.session)await refresh();}
       catch(error){showStatus(status,error.message||'No se pudo crear la cuenta.',true);}finally{if(button)button.disabled=false;}
     });
     logout?.addEventListener('click',async()=>{
