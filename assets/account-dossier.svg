@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650">
+<defs>
+ <linearGradient id="paper" x2="0.9" y2="1"><stop stop-color="#c4a982"/><stop offset=".45" stop-color="#806b52"/><stop offset="1" stop-color="#30271f"/></linearGradient>
+ <linearGradient id="photo" x2="0" y2="1"><stop stop-color="#18222a"/><stop offset=".55" stop-color="#0b1115"/><stop offset="1" stop-color="#030506"/></linearGradient>
+ <radialGradient id="mist"><stop stop-color="#9aa5a1" stop-opacity=".25"/><stop offset="1" stop-color="#0b0c0d" stop-opacity="0"/></radialGradient>
+ <filter id="shadow"><feGaussianBlur stdDeviation="18"/></filter>
+ <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="3" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .5 0 0 0 0 .43 0 0 0 0 .35 0 0 0 .16 0"/></filter>
+ <clipPath id="pic"><path d="M520 85 L1070 130 1030 560 485 520Z"/></clipPath>
+</defs>
+<rect width="1200" height="650" fill="#090909"/>
+<path d="M0 0H1200V650H0Z" fill="url(#mist)"/>
+<g opacity=".55" stroke="#51463b" fill="none"><path d="M0 70H1200M0 595H1200" stroke-width="2"/><path d="M45 28l80 0m970 0h60M30 625h120m900 0h110"/></g>
+<path d="M410 18L1175 42 1150 590 455 560Z" fill="#000" opacity=".55" filter="url(#shadow)"/>
+<path d="M450 38L1130 70 1090 580 425 545Z" fill="url(#paper)" stroke="#d1b993" stroke-width="7"/>
+<path d="M470 62L1100 90 1060 555 450 520Z" fill="#241f1a" stroke="#3b3025" stroke-width="4"/>
+<g transform="rotate(4 800 320)">
+ <rect x="545" y="105" width="545" height="430" fill="#08090a" stroke="#b7a48b" stroke-width="15"/>
+ <g clip-path="url(#pic)">
+  <rect x="540" y="95" width="560" height="460" fill="url(#photo)"/>
+  <circle cx="825" cy="205" r="88" fill="#d1d4c9" opacity=".15"/>
+  <ellipse cx="810" cy="440" rx="350" ry="140" fill="#a4b1aa" opacity=".12" filter="url(#shadow)"/>
+  <path d="M540 480L620 260 675 480 730 220 800 485 875 245 930 480 1010 260 1090 500Z" fill="#070a0b"/>
+  <path d="M560 520L650 280 700 520 770 260 830 520 900 300 965 520 1030 275 1100 530" fill="none" stroke="#28302e" stroke-width="18"/>
+  <path d="M825 480L825 370M825 370l-18 22m18-22 18 22" stroke="#f1c77c" stroke-width="4"/>
+  <circle cx="825" cy="365" r="16" fill="#e9c78a" opacity=".75"/>
+  <path d="M700 540Q810 455 930 540" stroke="#d5c9a7" opacity=".2" stroke-width="18" fill="none"/>
+ </g>
+</g>
+<path d="M500 95L1085 130 1070 570 480 530Z" fill="none" stroke="#ded0b8" stroke-width="4" opacity=".6"/>
+<path d="M300 110C520 140 550 35 710 75S990 170 1200 95" fill="none" stroke="#8f101b" stroke-width="5"/>
+<path d="M300 116C520 146 550 41 710 81S990 176 1200 101" fill="none" stroke="#d22a31" stroke-width="1.5"/>
+<g transform="rotate(-7 1020 490)">
+ <path d="M865 430L1180 405 1190 555 875 580Z" fill="#b7a181" stroke="#e0c9a6" stroke-width="5"/>
+ <path d="M887 450L1158 430" stroke="#6c5845" stroke-width="3" opacity=".7"/>
+ <text x="1035" y="490" text-anchor="middle" font-family="Georgia,serif" font-size="29" font-weight="bold" fill="#241b16" letter-spacing="2">EXPEDIENTE</text>
+ <text x="1035" y="530" text-anchor="middle" font-family="Georgia,serif" font-size="29" font-weight="bold" fill="#241b16" letter-spacing="2">DE AUTOR</text>
+</g>
+<path d="M0 0H1200V650H0Z" filter="url(#grain)" opacity=".35"/>
+</svg>
