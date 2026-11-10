@@ -91,12 +91,14 @@
       if (summary.length > 280) { showStatus(status,'El resumen no puede superar 280 caracteres.',true); return; }
       if (!categories.includes(category)) { showStatus(status,'Selecciona una categoría válida.',true); return; }
       if (!consent) { showStatus(status,'Debes aceptar las normas y confirmar que puedes compartir este relato.',true); return; }
-      const {data:authData} = await client.auth.getUser();
-      const payload = {title,body,author_name:author,summary:summary || null,category,consent:true,status:'pending',author_id:authData?.user?.id || null};
       const button = $('button[type="submit"]',form);
       if(button) button.disabled=true;
       showStatus(status,'Enviando tu relato…');
       try {
+        // getSession reads the existing local session without an extra auth network request.
+        const {data:sessionData,error:sessionError}=await client.auth.getSession();
+        if(sessionError) throw sessionError;
+        const payload = {title,body,author_name:author,summary:summary || null,category,consent:true,status:'pending',author_id:sessionData?.session?.user?.id || null};
         const {error}=await client.from('stories').insert(payload);
         if(error) throw error;
         form.reset();
