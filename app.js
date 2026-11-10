@@ -188,7 +188,7 @@
         const {data,error}=await client.from('stories').select('id,title,author_name,category,status,created_at').order('created_at',{ascending:false}).limit(100);
         if(error) throw error;
         target.innerHTML=(data||[]).map(s=>`<div class="item"><p class="meta">${escapeHTML(s.status)} · ${escapeHTML(s.category)} · ${escapeHTML(s.author_name)}</p><h3>${escapeHTML(s.title)}</h3><div class="actions-row">${['published','changes','rejected'].map(st=>`<button data-id="${escapeHTML(s.id)}" data-status="${st}">${st==='published'?'Publicar':st==='changes'?'Solicitar cambios':'Rechazar'}</button>`).join('')}</div></div>`).join('') || '<p class="empty">No hay relatos enviados.</p>';
-        $('button[data-id]',target).forEach(btn=>btn.addEventListener('click',async()=>{
+        $$('button[data-id]',target).forEach(btn=>btn.addEventListener('click',async()=>{
           btn.disabled=true;
           try {
             const nextStatus=btn.dataset.status;
