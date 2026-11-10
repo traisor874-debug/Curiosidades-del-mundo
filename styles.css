@@ -110,3 +110,57 @@ body{background:radial-gradient(ellipse at 78% 8%,#17232a 0,transparent 34%),rad
  .actions .button{padding:14px 16px}
  .discover-tile{min-height:190px}
 }
+
+/* Section identities: each destination has its own visual language */
+.site-header nav a[aria-current="page"]{color:#f0d0ca;position:relative}
+.site-header nav a[aria-current="page"]:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;background:currentColor}
+body.section-historias .library-intro{background:linear-gradient(90deg,#080d12f2 0%,#0a1118c9 55%,#080d12a8 100%),url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=85') center 48%/cover;border-color:#394b59}
+body.section-historias .eyebrow{color:#8faec2}
+body.section-historias .filters input,body.section-historias .filters select{background:#0c141b;border-color:#354957}
+body.section-historias .story-card{background:linear-gradient(145deg,#17232d,#0c1218);border-color:#344653}
+body.section-historias .story-card .category{color:#9bbbd0}
+body.section-historias .story-card:hover{border-color:#8faec2}
+body.section-narraciones .page{max-width:none;min-height:78vh;padding-top:90px;padding-bottom:100px;background:radial-gradient(ellipse at 75% 20%,#342019 0,transparent 38%),linear-gradient(180deg,#100d0e,#08090c 72%)}
+body.section-narraciones .page:before{content:"D’ASOMBRO AUDIO / TRANSMISIONES";display:block;color:#d28c70;letter-spacing:.25em;font-size:.65rem;margin-bottom:20px}
+body.section-narraciones .page h1{max-width:850px;font-size:clamp(3rem,8vw,6.4rem)}
+body.section-narraciones .eyebrow{color:#d28c70}
+body.section-narraciones .video-grid{max-width:1100px;margin-top:55px;border-top:1px solid #59372d;padding-top:28px}
+body.section-narraciones .empty{background:linear-gradient(135deg,#1c1211,#100d10);border:1px solid #59372d;color:#d5b4a8;min-height:170px;display:grid;place-items:center}
+body.section-enviar .page{max-width:none;background:radial-gradient(ellipse at 12% 18%,#342018 0,transparent 38%),#0b0c0e;padding-left:max(7vw,22px);padding-right:max(7vw,22px)}
+body.section-enviar .page>.eyebrow{color:#d08a70}
+body.section-enviar .page>h1{max-width:760px;font-size:clamp(3rem,7vw,5.8rem)}
+body.section-enviar .form-layout{max-width:1120px;margin-top:42px;grid-template-columns:.7fr 1.3fr}
+body.section-enviar .form-layout aside{border-left:2px solid #a45e49;padding:8px 0 8px 22px}
+body.section-enviar .form{background:linear-gradient(145deg,#1d1716,#111114);border-color:#56372f;box-shadow:0 22px 65px #0007}
+body.section-enviar .form input:focus,body.section-enviar .form textarea:focus,body.section-enviar .form select:focus{outline-color:#d08a70;border-color:#d08a70}
+body.section-enviar .button{background:#b36e57;border-color:#b36e57}
+body.section-cuenta .page{max-width:none;background:radial-gradient(ellipse at 80% 18%,#152d3a 0,transparent 40%),#090d12;padding-left:max(7vw,22px);padding-right:max(7vw,22px)}
+body.section-cuenta .page>.eyebrow{color:#8eb6ca}
+body.section-cuenta .page>h1{font-size:clamp(3rem,7vw,5.5rem)}
+body.section-cuenta .form-layout{max-width:1050px;margin-top:42px;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+body.section-cuenta .form{background:linear-gradient(145deg,#14222c,#0d151c);border-color:#344e5d}
+body.section-cuenta .form h2{font:600 1.8rem var(--serif);color:#dceaf0}
+body.section-cuenta .form input:focus{outline-color:#8eb6ca;border-color:#8eb6ca}
+body.section-cuenta .button{background:#7399aa;border-color:#7399aa}
+body.section-cuenta .notice{background:#12212b;border-color:#395767;color:#d5e8f0}
+body.section-lectura .page{max-width:none;padding-top:0;padding-bottom:90px;background:radial-gradient(ellipse at 50% 0%,#18232b 0,transparent 42%),#080a0d}
+body.section-lectura #story-content{max-width:1000px;margin:auto}
+body.section-admin .page{max-width:none;padding-left:max(7vw,22px);padding-right:max(7vw,22px);background:radial-gradient(ellipse at 85% 8%,#381719 0,transparent 35%),#0d090b}
+body.section-admin .page>.eyebrow{color:#dc7775}
+body.section-admin .page>h1{font-size:clamp(3rem,7vw,5.5rem)}
+body.section-admin #admin-stories{max-width:1100px;margin-top:35px}
+body.section-admin #admin-stories .item{background:#1a1114;border:1px solid #512a30;padding:24px;margin:16px 0}
+body.section-admin .button{background:#a94f55;border-color:#a94f55;color:#fff}
+body.section-normas .page,body.section-privacidad .page{max-width:900px}
+body.section-normas .page{border-left:3px solid #8eaa91}
+body.section-normas .eyebrow{color:#9eb99e}
+body.section-normas .prose h2{color:#a8c4a7}
+body.section-privacidad .page{border-left:3px solid #809cb8}
+body.section-privacidad .eyebrow{color:#91b1d2}
+body.section-privacidad .prose h2{color:#a7c2df}
+@media(max-width:780px){
+ body.section-enviar .form-layout,body.section-cuenta .form-layout{grid-template-columns:1fr;gap:22px}
+ body.section-narraciones .page{padding-top:58px}
+ body.section-historias .library-intro{background-position:58% center}
+ body.section-admin .page,body.section-cuenta .page,body.section-enviar .page{padding-top:55px}
+}
