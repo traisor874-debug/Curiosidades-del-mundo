@@ -364,3 +364,87 @@ body.account-redesign{background:#070708;color:#eee8e3;background-image:radial-g
  .account-redesign .account-tabs{flex-wrap:nowrap;overflow-x:auto}
  .account-redesign .account-tabs button{white-space:nowrap}
 }
+
+
+/* D'ASOMBRO — dirección de arte: archivo paranormal */
+body.account-redesign{
+ background:#070707;
+ background-image:
+   radial-gradient(ellipse at 78% 18%,rgba(80,18,22,.16),transparent 34%),
+   radial-gradient(ellipse at 12% 72%,rgba(110,77,49,.10),transparent 32%),
+   url("https://www.transparenttextures.com/patterns/black-paper.png");
+}
+.account-redesign .site-header{
+ background:linear-gradient(180deg,rgba(5,5,5,.98),rgba(10,8,8,.95));
+ border-bottom:1px solid #55433b;
+ box-shadow:0 8px 30px #000b;
+}
+.account-redesign .site-header .brand strong{color:#e9dfd6;text-shadow:0 1px 0 #000}
+.account-redesign .brand-mark{display:inline-block;color:#b20d20;text-shadow:0 0 8px #b20d20,0 0 20px #7e0b18;transform:rotate(-12deg)}
+.account-redesign .site-header nav a{font-size:1.04rem;letter-spacing:.01em}
+.account-redesign .site-header nav a[aria-current=page]{color:#fff;text-shadow:0 0 14px #9c1723}
+.account-redesign .account-page{padding-top:0}
+.account-redesign .account-hero{
+ min-height:330px;max-width:1320px;margin:0 auto;
+ padding:48px clamp(22px,4vw,54px);
+ background:
+   linear-gradient(90deg,#080808 0%,rgba(8,8,8,.96) 36%,rgba(8,8,8,.15) 100%),
+   url("assets/account-dossier.svg") right center/cover no-repeat;
+ border-bottom:1px solid #72594b;
+ box-shadow:inset 0 -30px 45px -40px #b58b64;
+}
+.account-redesign .account-hero:after{
+ background:linear-gradient(90deg,transparent 55%,rgba(0,0,0,.12)),repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.018) 4px);
+}
+.account-redesign .account-hero-art{display:none}
+.account-redesign .account-hero-copy{max-width:550px}
+.account-redesign .account-hero-copy .eyebrow{color:#d2bca8}
+.account-redesign .account-hero-copy h1{font-size:clamp(3.5rem,7vw,5.8rem);text-shadow:0 5px 20px #000}
+.account-redesign .account-hero-copy>p:last-child{font-size:1.08rem;color:#d0c6bc}
+.account-redesign .dossier-panel,.account-redesign .activity-panel{
+ background:
+   linear-gradient(135deg,rgba(24,21,19,.91),rgba(7,7,8,.96)),
+   url("https://www.transparenttextures.com/patterns/black-paper.png");
+ border:1px solid #67564a;border-radius:5px;
+ box-shadow:0 22px 55px #000b,inset 0 0 0 1px rgba(229,205,173,.08);
+}
+.account-redesign .dossier-panel:after,.account-redesign .activity-panel:after{
+ content:"";position:absolute;inset:5px;border:1px solid rgba(218,196,166,.12);pointer-events:none;
+}
+.account-redesign .profile-topline{border-color:#55443a}
+.account-redesign .avatar-preview{border:2px solid #a51b29;box-shadow:0 0 0 1px #d15a55,0 0 28px #8b101e55}
+.account-redesign .avatar-preview img{filter:grayscale(1) contrast(1.28) brightness(.82)}
+.account-redesign .avatar-quick button{border:1px solid #66564a;border-radius:4px;background:#0a0909}
+.account-redesign .avatar-quick button img{filter:grayscale(.8) sepia(.15) contrast(1.18) brightness(.78)}
+.account-redesign .avatar-quick button.active{border:2px solid #b91e2d;box-shadow:0 0 0 2px #b91e2d44,0 0 20px #a10e1c55}
+.account-redesign .account-metrics>div{border-right:1px solid #59463a}
+.account-redesign .account-metrics strong{color:#eee1d2}
+.account-redesign .account-main-tabs button{font-family:var(--serif);font-size:1rem}
+.account-redesign .account-main-tabs button.active{background:linear-gradient(135deg,#991a25,#4a090f);border-color:#b52b36;box-shadow:0 5px 22px #8b111e66}
+.account-redesign .activity-panel{border-radius:5px}
+.account-redesign .my-story{background:linear-gradient(135deg,#151211,#090909);border:1px solid #5a4a3e;border-radius:4px}
+.account-redesign .my-story-art{filter:grayscale(.65) sepia(.15) contrast(1.2) brightness(.76);border:1px solid #655444}
+.account-redesign .my-story .story-state{border:1px solid #c18b20;background:#261b08;color:#f2bb4a}
+.account-redesign .settings-list a,.account-redesign .settings-list button{border-color:#4c3c32}
+.account-redesign .settings-list .logout-row{color:#e12a36}
+.account-redesign .account-footer{background:#070707 url("https://www.transparenttextures.com/patterns/black-paper.png");border-top:1px solid #574437}
+@media(max-width:700px){
+ .account-redesign .site-header{grid-template-columns:minmax(0,1fr) auto;padding:12px 14px 0}
+ .account-redesign .site-header .brand strong{font-size:1.55rem}
+ .account-redesign .site-header nav{justify-content:flex-start;gap:0;overflow-x:auto;scrollbar-width:none}
+ .account-redesign .site-header nav::-webkit-scrollbar{display:none}
+ .account-redesign .site-header nav a{font-size:.94rem;padding:8px 13px}
+ .account-redesign .account-hero{min-height:300px;padding:40px 16px 30px;background-position:62% center;background-size:auto 100%}
+ .account-redesign .account-hero:after{background:linear-gradient(90deg,#08080830,transparent)}
+ .account-redesign .account-hero-copy{max-width:74%}
+ .account-redesign .account-hero-copy h1{font-size:3.2rem}
+ .account-redesign .account-hero-copy>p:last-child{font-size:.94rem;line-height:1.55}
+ .account-redesign .dossier-panel{background-position:center}
+ .account-redesign .profile-topline{gap:10px}
+ .account-redesign .avatar-preview{width:104px;height:104px;flex-basis:104px}
+ .account-redesign .profile-identity h2{font-size:1.65rem}
+ .account-redesign .account-metrics>div{padding:12px 5px}
+ .account-redesign .account-metrics span{font-size:.72rem}
+ .account-redesign .my-story{grid-template-columns:88px minmax(0,1fr);gap:12px}
+ .account-redesign .my-story-art{width:88px;height:96px}
+}
