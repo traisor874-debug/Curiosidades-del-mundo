@@ -3,60 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="D’Asombro: historias sorprendentes, inquietantes y extraordinarias de la comunidad.">
+<meta name="description" content="Tu expediente de autor en D’Asombro. Administra tu identidad y sigue tus relatos.">
+<meta name="theme-color" content="#09090a">
 <title>Mi cuenta | D’Asombro</title>
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
-<body class="section-cuenta">
-<header class="site-header">
-<a class="brand" href="index.html"><strong>D’ASOMBRO</strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a>
-<nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html" aria-current="page">Mi cuenta</a></nav>
+<body class="section-cuenta account-redesign">
+<header class="site-header account-header">
+  <a class="brand" href="index.html"><strong>D’ASOMBRO<span class="brand-mark">◉</span></strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a>
+  <div class="header-tools"><a href="#account-notifications" aria-label="Notificaciones" class="header-icon">♧<i></i></a><a href="cuenta.html" aria-label="Mi perfil" class="header-icon">◎</a></div>
+  <nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html" aria-current="page">Mi cuenta</a></nav>
 </header>
-
 <main class="page account-page">
-    <p class="eyebrow">TU ESPACIO · PERFIL DE AUTOR</p>
-    <h1>Mi cuenta</h1>
-    <p class="leadpage">Tu rincón en D’Asombro. Administra tu identidad y sigue el recorrido de tus relatos.</p>
-    <p id="signed-in" class="notice">Comprobando sesión…</p>
-    <section id="account-dashboard" class="account-dashboard hidden">
-      <div class="profile-panel">
+  <section class="account-hero">
+    <div class="account-hero-copy"><p class="eyebrow">TU ESPACIO <span></span></p><h1>Mi cuenta</h1><p>Administra tu identidad, revisa el estado de tus relatos y configura tu experiencia en D’Asombro.</p></div>
+    <div class="account-hero-art" role="img" aria-label="Expediente de autor sobre un escritorio oscuro"></div>
+  </section>
+  <p id="signed-in" class="notice account-notice">Comprobando sesión…</p>
+  <section id="account-dashboard" class="account-dashboard hidden">
+    <section class="profile-panel dossier-panel">
+      <div class="profile-topline">
         <div class="profile-heading">
-          <div id="profile-avatar-preview" class="avatar-preview" aria-hidden="true"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=90" alt=""></div>
-          <div><p class="eyebrow">IDENTIDAD DEL ARCHIVO</p><h2 id="profile-display-name">Tu perfil</h2><p id="profile-email" class="meta"></p></div>
+          <div id="profile-avatar-preview" class="avatar-preview" aria-hidden="true"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=300&h=300&q=85" alt=""></div>
+          <div class="profile-identity"><h2 id="profile-display-name">Autor</h2><p id="profile-email" class="meta"></p><span class="author-tag">♢ &nbsp;Autor registrado</span></div>
         </div>
-        <form id="profile-form" class="profile-form">
-          <label>Nombre de usuario<input id="profile-name" name="display_name" maxlength="24" minlength="3" placeholder="¿Cómo te conocerá la comunidad?" required></label>
-          <fieldset class="avatar-picker"><legend>Elige tu avatar</legend><p class="meta">Avatares prediseñados. No se permiten fotografías ni imágenes externas.</p><div id="avatar-options" class="avatar-options"><label class="avatar-option"><input type="radio" name="avatar" value="portrait1"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait2"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait3"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait4"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait5"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait6"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait7"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label><label class="avatar-option"><input type="radio" name="avatar" value="portrait8"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=180&h=180&q=85" alt="" loading="lazy"></span></label></div></fieldset>
-          <button class="button" type="submit">Guardar perfil</button>
-        </form>
+        <button type="button" class="edit-profile-button" id="edit-profile-toggle">♢ &nbsp;Editar perfil</button>
       </div>
-      <section class="activity-panel">
-        <div class="activity-heading"><div><p class="eyebrow">TU ACTIVIDAD</p><h2>Mis relatos</h2></div><span id="story-total" class="activity-total">0</span></div>
-        <div class="story-stats">
-          <div><strong id="count-pending">0</strong><span>Por revisar</span></div>
-          <div><strong id="count-changes">0</strong><span>Por corregir</span></div>
-          <div><strong id="count-published">0</strong><span>Publicados</span></div>
-          <div><strong id="count-rejected">0</strong><span>No aceptados</span></div>
-        </div>
-        <div class="account-tabs" role="tablist" aria-label="Filtrar mis relatos">
-          <button type="button" class="active" data-account-filter="all">Todos</button>
-          <button type="button" data-account-filter="pending">Por revisar</button>
-          <button type="button" data-account-filter="changes">Por corregir</button>
-          <button type="button" data-account-filter="published">Publicados</button>
-          <button type="button" data-account-filter="rejected">No aceptados</button>
-        </div>
-        <div id="my-stories" class="my-stories"><p class="empty">Cargando tus relatos…</p></div>
-      </section>
-      <div class="account-actions"><a class="textlink" href="enviar.html">＋ Enviar otro relato</a><button id="logout-button" class="button button-quiet" type="button">Cerrar sesión</button></div>
+      <form id="profile-form" class="profile-form hidden">
+        <label>Nombre de usuario<input id="profile-name" name="display_name" maxlength="24" minlength="3" placeholder="¿Cómo te conocerá la comunidad?" required></label>
+        <fieldset class="avatar-picker"><legend>Cambiar avatar</legend><p class="meta">Elige una imagen de la colección D’Asombro. No se permiten fotografías externas.</p><div id="avatar-options" class="avatar-options">
+          <label class="avatar-option"><input type="radio" name="avatar" value="window"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=180&h=180&q=85" alt="Ventana nocturna"></span></label>
+          <label class="avatar-option"><input type="radio" name="avatar" value="forest"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=180&h=180&q=85" alt="Bosque en niebla"></span></label>
+          <label class="avatar-option"><input type="radio" name="avatar" value="raven"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1549608276-5786777e6587?auto=format&fit=crop&w=180&h=180&q=85" alt="Ave bajo la luna"></span></label>
+          <label class="avatar-option"><input type="radio" name="avatar" value="radio"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1593078166036-9e3c4c7b9c5a?auto=format&fit=crop&w=180&h=180&q=85" alt="Radio antigua"></span></label>
+          <label class="avatar-option"><input type="radio" name="avatar" value="lighthouse"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=180&h=180&q=85" alt="Faro en la noche"></span></label>
+          <label class="avatar-option"><input type="radio" name="avatar" value="silhouette"><span class="avatar-choice"><img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=180&h=180&q=85" alt="Silueta frente a una ventana"></span></label>
+        </div></fieldset>
+        <div class="profile-edit-actions"><button class="button" type="submit">Guardar cambios</button><button type="button" class="button button-quiet" id="cancel-profile-edit">Cancelar</button></div>
+      </form>
+      <div class="avatar-collection"><div class="avatar-collection-heading"><strong>Cambiar avatar</strong><button type="button" id="show-avatar-editor">Ver todos →</button></div><div class="avatar-quick" id="avatar-quick">
+        <button type="button" data-avatar-choice="window" aria-label="Avatar ventana"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+        <button type="button" data-avatar-choice="forest" aria-label="Avatar bosque"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+        <button type="button" data-avatar-choice="raven" aria-label="Avatar cuervo"><img src="https://images.unsplash.com/photo-1549608276-5786777e6587?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+        <button type="button" data-avatar-choice="radio" aria-label="Avatar radio"><img src="https://images.unsplash.com/photo-1593078166036-9e3c4c7b9c5a?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+        <button type="button" data-avatar-choice="lighthouse" aria-label="Avatar faro"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+        <button type="button" data-avatar-choice="silhouette" aria-label="Avatar silueta"><img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=180&h=180&q=85" alt=""></button>
+      </div></div>
+      <div class="story-stats account-metrics">
+        <div><strong id="story-total">0</strong><span>Total de relatos</span></div>
+        <div><strong id="count-pending">0</strong><span>Por revisar</span></div>
+        <div><strong id="count-changes">0</strong><span>Por corregir</span></div>
+        <div><strong id="count-published">0</strong><span>Publicados</span></div>
+      </div>
     </section>
-    <div id="auth-forms" class="form-layout">
-      <form id="login-form" class="form"><h2>Iniciar sesión</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password" minlength="6"></label><button class="button" type="submit">Entrar</button></form>
-      <form id="signup-form" class="form"><h2>Crear cuenta</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña (mínimo 6 caracteres)<input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button" type="submit">Crear cuenta</button></form>
-    </div>
-    <p id="account-status" class="status" aria-live="polite"></p>
-  </main>
-
-<footer class="site-footer"><a class="brand" href="index.html"><strong>D’ASOMBRO</strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a><p>Historias compartidas por la comunidad. Cada historia deja algo detrás.</p><nav><a href="normas.html">Normas</a><a href="privacidad.html">Privacidad</a><a href="admin.html">Administración</a></nav></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="app.js?v=9"></script>
+    <nav class="account-main-tabs" aria-label="Secciones de tu cuenta">
+      <button type="button" class="active" data-account-view="stories">▤ &nbsp;Mis relatos</button>
+      <button type="button" data-account-view="favorites">☆ &nbsp;Favoritos</button>
+      <button type="button" data-account-view="history">◷ &nbsp;Historial</button>
+      <button type="button" data-account-view="settings">⚙ &nbsp;Configuración</button>
+    </nav>
+    <section class="activity-panel account-view" id="view-stories">
+      <div class="activity-heading"><div><h2>Mis relatos</h2><p>Aquí puedes ver el estado de todos los relatos que has enviado.</p></div></div>
+      <div class="account-tabs" role="tablist" aria-label="Filtrar mis relatos">
+        <button type="button" class="active" data-account-filter="all">Todos</button><button type="button" data-account-filter="pending">Por revisar</button><button type="button" data-account-filter="changes">Por corregir</button><button type="button" data-account-filter="published">Publicados</button><button type="button" data-account-filter="rejected">No aceptados</button>
+      </div>
+      <div id="my-stories" class="my-stories"><p class="empty">Cargando tus relatos…</p></div>
+    </section>
+    <section class="activity-panel account-view hidden" id="view-favorites"><div class="activity-heading"><div><h2>Favoritos</h2><p>Relatos que guardaste para volver a ellos.</p></div></div><div id="favorite-stories" class="my-stories"><p class="empty">Todavía no has guardado favoritos.</p></div></section>
+    <section class="activity-panel account-view hidden" id="view-history"><div class="activity-heading"><div><h2>Historial</h2><p>Los últimos relatos que has abierto en este dispositivo.</p></div><button type="button" class="subtle-action" id="clear-history">Borrar historial</button></div><div id="reading-history" class="my-stories"><p class="empty">Aún no hay lecturas recientes.</p></div></section>
+    <section class="activity-panel account-view hidden" id="view-settings"><div class="activity-heading"><div><h2>Configuración</h2><p>Controla tu cuenta y tu experiencia en D’Asombro.</p></div></div><div class="settings-list"><a href="privacidad.html"><span>♙</span><div><strong>Datos de la cuenta</strong><small>Correo, contraseña y privacidad</small></div><b>›</b></a><button type="button" id="notifications-setting"><span>♧</span><div><strong>Notificaciones</strong><small>Actualizaciones sobre tus relatos</small></div><b>›</b></button><button type="button" id="logout-button" class="logout-row"><span>⇥</span><div><strong>Cerrar sesión</strong><small>Salir de tu cuenta en D’Asombro</small></div><b>›</b></button></div></section>
+    <div class="account-actions"><a class="textlink" href="enviar.html">＋ Enviar otro relato</a></div>
+  </section>
+  <div id="auth-forms" class="form-layout"><form id="login-form" class="form"><h2>Iniciar sesión</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password" minlength="6"></label><button class="button" type="submit">Entrar</button></form><form id="signup-form" class="form"><h2>Crear cuenta</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña (mínimo 6 caracteres)<input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button" type="submit">Crear cuenta</button></form></div>
+  <p id="account-status" class="status" aria-live="polite"></p>
+</main>
+<footer class="site-footer account-footer"><a class="brand" href="index.html"><strong>D’ASOMBRO</strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a><p>Historias compartidas por la comunidad. Cada historia deja algo detrás.</p><nav><a href="normas.html">Normas</a><a href="privacidad.html">Privacidad</a><a href="admin.html">Administración</a></nav></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="app.js?v=10"></script>
 </body></html>
