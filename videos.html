@@ -3,19 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="D’Asombro: historias sorprendentes, inquietantes y extraordinarias de la comunidad.">
+<meta name="description" content="Narraciones y relatos audiovisuales de D’Asombro.">
+<meta name="theme-color" content="#08090b">
 <title>Narraciones | D’Asombro</title>
-<link rel="stylesheet" href="styles.css?v=14">
+<link rel="stylesheet" href="styles.css?v=15">
 </head>
 <body class="section-narraciones">
 <header class="site-header">
-<a class="brand" href="index.html"><img class="brand-logo" src="assets/dasombro-logo.svg" alt="D’Asombro"><small>HISTORIAS QUE DESPIERTAN ALGO</small></a>
+<a class="brand" href="index.html" aria-label="D’Asombro, ir al inicio"><img class="brand-logo" src="assets/dasombro-logo.svg" alt="D’Asombro"><small>HISTORIAS QUE DESPIERTAN ALGO</small></a>
 <nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html" aria-current="page">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html">Mi cuenta</a></nav>
 </header>
-
-<main class="page"><p class="eyebrow">MÁS ALLÁ DE LAS PÁGINAS</p><h1>Historias para escuchar</h1><p class="leadpage">Muy pronto encontrarás aquí las historias narradas y los videos originales de D’Asombro.</p><div id="video-list" class="video-grid"><p class="empty">Estamos preparando las primeras narraciones. Muy pronto podrás verlas aquí.</p></div></main>
-
-<footer class="site-footer"><a class="brand" href="index.html"><img class="brand-logo" src="assets/dasombro-logo.svg" alt="D’Asombro"><small>HISTORIAS QUE DESPIERTAN ALGO</small></a><p>Historias compartidas por la comunidad. Cada historia deja algo detrás.</p><nav><a href="normas.html">Normas</a><a href="privacidad.html">Privacidad</a><a href="admin.html">Administración</a></nav></footer>
+<main class="narraciones-page">
+<section class="narraciones-hero">
+ <div class="narraciones-hero-copy">
+  <p class="eyebrow">ARCHIVO SONORO D’ASOMBRO · EXPEDIENTE 002</p>
+  <h1>Hay historias que <em>se escuchan distinto.</em></h1>
+  <p>Apaga un momento el ruido de afuera. Aquí viven los relatos narrados, las voces y los detalles que hacen que lo inexplicable se sienta más cerca.</p>
+  <a class="button" href="#archivo-narraciones">Explorar narraciones ↓</a>
+ </div>
+ <div class="narraciones-hero-caption"><span>ESCUCHA A TU RITMO</span><span>RELATOS · VOCES · ATMÓSFERA</span></div>
+</section>
+<section class="narraciones-content" id="archivo-narraciones">
+ <div class="narraciones-section-heading"><div><p class="eyebrow">LA COLECCIÓN AUDIOVISUAL</p><h2>Relatos para escuchar</h2><p>Historias de la comunidad, contadas en voz alta.</p></div><span class="archive-index">ARCHIVO / 002</span></div>
+ <div id="video-list" class="video-grid narraciones-grid" aria-live="polite">
+  <article class="narracion-placeholder">
+   <div class="narracion-placeholder-art" aria-hidden="true"><span>DA</span><i></i></div>
+   <div class="narracion-placeholder-copy"><span class="category">PRÓXIMAMENTE · D’ASOMBRO</span><h3>Las primeras voces del archivo</h3><p>Estamos preparando las primeras narraciones originales. Muy pronto podrás escucharlas y verlas aquí.</p><span class="coming-soon">EL ARCHIVO ESTÁ EN PREPARACIÓN</span></div>
+  </article>
+ </div>
+</section>
+<section class="narraciones-invite"><div><p class="eyebrow">TU HISTORIA TAMBIÉN PUEDE TENER VOZ</p><h2>¿Nos compartes lo que viviste?</h2><p>Envíanos tu relato. Si forma parte del archivo, podrá convertirse en una próxima narración.</p></div><a class="button" href="enviar.html">Enviar un relato ↗</a></section>
+</main>
+<footer class="site-footer"><a class="brand" href="index.html" aria-label="D’Asombro, ir al inicio"><img class="brand-logo" src="assets/dasombro-logo.svg" alt="D’Asombro"><small>HISTORIAS QUE DESPIERTAN ALGO</small></a><p>Historias compartidas por la comunidad. Cada historia deja algo detrás.</p><nav><a href="normas.html">Normas</a><a href="privacidad.html">Privacidad</a><a href="admin.html">Administración</a></nav></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script><script src="app.js?v=4"></script>
+<script src="config.js"></script><script src="app.js?v=6"></script>
 </body></html>
