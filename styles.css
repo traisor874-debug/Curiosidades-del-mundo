@@ -690,3 +690,36 @@ body.section-privacidad .page{background:linear-gradient(135deg,rgba(10,16,22,.9
  body.section-normas .page,body.section-privacidad .page{padding:25px 18px}
  .site-footer{gap:16px}
 }
+
+
+/* Marca D'Asombro: última O carmesí con salpicadura de tinta/sangre */
+.brand strong{display:inline-flex;align-items:baseline;white-space:nowrap}
+.brand-mark{
+ position:relative;display:inline-block;color:#b20d25;
+ text-shadow:0 0 5px rgba(177,8,35,.75),0 0 15px rgba(145,0,24,.65),0 0 28px rgba(117,0,18,.38);
+ isolation:isolate;
+}
+.brand-mark:before{
+ content:"";position:absolute;z-index:-1;inset:-.28em -.34em -.16em -.25em;
+ background:
+  radial-gradient(ellipse at 52% 49%,rgba(171,5,29,.94) 0 17%,transparent 19%),
+  radial-gradient(ellipse at 20% 25%,#9f071f 0 3%,transparent 4%),
+  radial-gradient(ellipse at 78% 16%,#b20b27 0 2.5%,transparent 3.5%),
+  radial-gradient(ellipse at 92% 58%,#8c071c 0 3%,transparent 4%),
+  radial-gradient(ellipse at 12% 72%,#a50922 0 2%,transparent 3.5%),
+  radial-gradient(ellipse at 65% 88%,#a50922 0 2.4%,transparent 3.5%),
+  radial-gradient(ellipse at 35% 8%,#c01631 0 1.8%,transparent 3%),
+  radial-gradient(ellipse at 4% 46%,#9b081f 0 1.5%,transparent 3%);
+ filter:drop-shadow(0 0 5px rgba(150,0,20,.65));
+ transform:rotate(-13deg) scale(1.08);
+ pointer-events:none;
+}
+.brand-mark:after{
+ content:"";position:absolute;z-index:-1;width:.12em;height:.35em;
+ right:-.02em;top:.53em;border-radius:0 0 70% 70%;
+ background:linear-gradient(#b30c28,#69000e);transform:rotate(22deg);
+ box-shadow:-.38em -.54em 0 -.025em #a20a21,.32em -.78em 0 -.035em #a20a21;
+}
+.site-header .brand-mark{color:#c10d2c}
+.site-footer .brand-mark{color:#a90b25}
+@media(max-width:780px){.brand-mark:before{inset:-.2em -.28em -.12em -.2em}}
