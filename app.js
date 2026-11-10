@@ -121,56 +121,104 @@
   }
   async function initAccount() {
     const loginForm=$('#login-form'), signupForm=$('#signup-form'), logout=$('#logout-button'), status=$('#account-status'), signed=$('#signed-in');
+    const dashboard=$('#account-dashboard'), authForms=$('#auth-forms'), profileForm=$('#profile-form'), storiesTarget=$('#my-stories');
     if (!loginForm && !signupForm && !logout) return;
     if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
+    const avatars={moon:'☾',eye:'◉',ghost:'♙',raven:'♟',star:'✦',mask:'◈',spiral:'◎',key:'⚿'};
+    let ownStories=[];
+    let activeFilter='all';
+    function renderOwnStories(){
+      const rows=ownStories.filter(s=>activeFilter==='all'||s.status===activeFilter);
+      if(!storiesTarget)return;
+      if(!rows.length){storiesTarget.innerHTML='<div class="empty account-empty">No hay relatos en esta categoría todavía. <a href="enviar.html">Comparte tu primera historia →</a></div>';return;}
+      storiesTarget.innerHTML=rows.map(s=>{
+        const labels={pending:'En revisión',changes:'Necesita correcciones',published:'Publicado',rejected:'No aceptado'};
+        const notes=s.moderation_note?'<p class="moderation-note">'+escapeHTML(s.moderation_note)+'</p>':'';
+        return '<article class="my-story"><div class="my-story-top"><span class="story-state state-'+escapeHTML(s.status)+'">'+(labels[s.status]||escapeHTML(s.status))+'</span><span class="meta">'+escapeHTML(dateText(s.created_at))+'</span></div><h3>'+escapeHTML(s.title)+'</h3><p class="meta">'+escapeHTML(s.category)+'</p>'+notes+(s.status==='published'?'<a class="textlink" href="historia.html?id='+encodeURIComponent(s.id)+'">Ver publicado →</a>':'')+'</article>';
+      }).join('');
+    }
+    async function loadOwnStories(user){
+      if(!storiesTarget)return;
+      storiesTarget.innerHTML='<p class="empty">Buscando tus relatos…</p>';
+      try{
+        const {data,error}=await client.from('stories').select('id,title,category,status,created_at,moderation_note').eq('author_id',user.id).order('created_at',{ascending:false}).limit(100);
+        if(error)throw error;
+        ownStories=data||[];
+        const count=key=>ownStories.filter(s=>s.status===key).length;
+        $('#story-total').textContent=String(ownStories.length);
+        $('#count-pending').textContent=String(count('pending'));
+        $('#count-changes').textContent=String(count('changes'));
+        $('#count-published').textContent=String(count('published'));
+        $('#count-rejected').textContent=String(count('rejected'));
+        renderOwnStories();
+      }catch(error){
+        console.error('No se pudieron cargar los relatos de la cuenta:',error);
+        storiesTarget.innerHTML='<p class="empty">No se pudieron consultar tus relatos. Es posible que falte una política de lectura para que cada usuario vea únicamente sus propios envíos. Tus relatos no se han modificado.</p>';
+      }
+    }
+    function setProfile(user){
+      const meta=user.user_metadata||{};
+      const name=meta.display_name||'Autor sin nombre';
+      const avatar=avatars[meta.avatar_id]||avatars.moon;
+      $('#profile-display-name').textContent=name;
+      $('#profile-email').textContent=user.email||'';
+      $('#profile-name').value=meta.display_name||'';
+      $('#profile-avatar-preview').textContent=avatar;
+      $$('input[name="avatar"]').forEach(input=>{input.checked=input.value.trim()===meta.avatar_id;});
+    }
     async function refresh(){
-      try {
+      try{
         const {data,error}=await client.auth.getSession();
-        if(error) throw error;
-        const user=data?.session?.user || null;
-        if(signed) signed.textContent=user ? `Sesión iniciada: ${user.email}` : 'No has iniciado sesión.';
-        if(logout) logout.classList.toggle('hidden',!user);
+        if(error)throw error;
+        const user=data?.session?.user||null;
+        if(signed)signed.textContent=user?'Sesión iniciada':'No has iniciado sesión.';
+        dashboard?.classList.toggle('hidden',!user);
+        authForms?.classList.toggle('hidden',!!user);
+        if(user){
+          setProfile(user);
+          await loadOwnStories(user);
+        }
         return user;
-      } catch(error) {
-        console.error('Error al comprobar la sesión:',error);
-        if(signed) signed.textContent='No se pudo comprobar tu sesión. Recarga la página e inténtalo de nuevo.';
-        showStatus(status,error.message || 'No se pudo comprobar la sesión.',true);
+      }catch(error){
+        console.error(error);
+        if(signed)signed.textContent='No se pudo comprobar tu sesión.';
+        showStatus(status,error.message||'No se pudo comprobar la sesión.',true);
         return null;
       }
     }
-    loginForm?.addEventListener('submit',async e=>{
+    profileForm?.addEventListener('submit',async e=>{
       e.preventDefault();
-      const button=$('button[type="submit"]',loginForm);
-      if(button) button.disabled=true;
-      try {
-        const fd=new FormData(loginForm);
-        const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});
-        if(error) throw error;
-        showStatus(status,'Sesión iniciada correctamente.');
-        await refresh();
-      } catch(error) { showStatus(status,error.message || 'No se pudo iniciar sesión.',true); }
-      finally { if(button) button.disabled=false; }
+      const name=$('#profile-name').value.trim();
+      const avatar=document.querySelector('input[name="avatar"]:checked')?.value.trim();
+      if(name.length<3||name.length>24){showStatus(status,'El nombre debe tener entre 3 y 24 caracteres.',true);return;}
+      if(!avatar||!avatars[avatar]){showStatus(status,'Elige uno de los avatares disponibles.',true);return;}
+      const button=$('button[type="submit"]',profileForm);if(button)button.disabled=true;
+      try{
+        const {data,error}=await client.auth.updateUser({data:{display_name:name,avatar_id:avatar}});
+        if(error)throw error;
+        if(data?.user)setProfile(data.user);
+        showStatus(status,'Tu perfil se guardó correctamente.');
+      }catch(error){showStatus(status,error.message||'No se pudo guardar el perfil.',true);}
+      finally{if(button)button.disabled=false;}
+    });
+    $$('[data-account-filter]').forEach(button=>button.addEventListener('click',()=>{
+      activeFilter=button.dataset.accountFilter;
+      $$('[data-account-filter]').forEach(item=>item.classList.toggle('active',item===button));
+      renderOwnStories();
+    }));
+    loginForm?.addEventListener('submit',async e=>{
+      e.preventDefault();const button=$('button[type="submit"]',loginForm);if(button)button.disabled=true;
+      try{const fd=new FormData(loginForm);const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});if(error)throw error;showStatus(status,'Sesión iniciada correctamente.');await refresh();}
+      catch(error){showStatus(status,error.message||'No se pudo iniciar sesión.',true);}finally{if(button)button.disabled=false;}
     });
     signupForm?.addEventListener('submit',async e=>{
-      e.preventDefault();
-      const button=$('button[type="submit"]',signupForm);
-      if(button) button.disabled=true;
-      try {
-        const fd=new FormData(signupForm);
-        const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password')});
-        if(error) throw error;
-        showStatus(status,data?.session?'Cuenta creada y sesión iniciada.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación antes de iniciar sesión.');
-        if(data?.session) await refresh();
-      } catch(error) { showStatus(status,error.message || 'No se pudo crear la cuenta.',true); }
-      finally { if(button) button.disabled=false; }
+      e.preventDefault();const button=$('button[type="submit"]',signupForm);if(button)button.disabled=true;
+      try{const fd=new FormData(signupForm);const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password'),options:{data:{display_name:'',avatar_id:'moon'}}});if(error)throw error;showStatus(status,data?.session?'Cuenta creada. Completa tu perfil.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación.');if(data?.session)await refresh();}
+      catch(error){showStatus(status,error.message||'No se pudo crear la cuenta.',true);}finally{if(button)button.disabled=false;}
     });
     logout?.addEventListener('click',async()=>{
-      try {
-        const {error}=await client.auth.signOut();
-        if(error) throw error;
-        showStatus(status,'Sesión cerrada.');
-        await refresh();
-      } catch(error) { showStatus(status,error.message || 'No se pudo cerrar la sesión.',true); }
+      try{const {error}=await client.auth.signOut();if(error)throw error;showStatus(status,'Sesión cerrada.');await refresh();}
+      catch(error){showStatus(status,error.message||'No se pudo cerrar la sesión.',true);}
     });
     await refresh();
   }
