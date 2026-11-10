@@ -209,3 +209,33 @@ body.section-privacidad .prose h2{color:#a7c2df}
 .account-actions{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
 .button-quiet{background:transparent!important;color:#d0c6c2!important;border-color:#5a4b49!important}
 @media(max-width:700px){.account-page{padding-top:52px}.profile-heading{align-items:flex-start}.avatar-preview{width:70px;height:70px;flex-basis:70px}.story-stats{grid-template-columns:repeat(2,1fr)}.account-tabs{flex-wrap:nowrap;overflow-x:auto}.account-tabs button{white-space:nowrap}.my-story-top{align-items:flex-start;flex-direction:column}.account-actions{align-items:stretch}.account-actions>*{width:100%;text-align:center}}
+
+/* Account page responsive repair + curated portrait avatars */
+html,body{max-width:100%;overflow-x:hidden}
+body.section-cuenta .account-page{width:100%;max-width:100%;min-width:0;padding-left:clamp(16px,5vw,64px);padding-right:clamp(16px,5vw,64px);overflow:hidden}
+body.section-cuenta .account-dashboard{width:100%;max-width:1040px;min-width:0;margin-left:auto;margin-right:auto}
+body.section-cuenta .profile-panel,body.section-cuenta .activity-panel,body.section-cuenta .account-actions{width:100%;min-width:0;max-width:100%}
+body.section-cuenta .profile-form,body.section-cuenta .avatar-picker,body.section-cuenta .avatar-options,body.section-cuenta .my-stories{min-width:0;max-width:100%}
+body.section-cuenta .account-tabs{min-width:0;max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}
+body.section-cuenta .account-tabs button{flex:0 0 auto;white-space:nowrap}
+body.section-cuenta .profile-heading{min-width:0}
+body.section-cuenta .profile-heading>div:last-child{min-width:0;overflow-wrap:anywhere}
+body.section-cuenta .avatar-preview{padding:0;overflow:hidden;background:#101820;border:2px solid #a45f59}
+body.section-cuenta .avatar-preview img{display:block;width:100%;height:100%;object-fit:cover}
+body.section-cuenta .avatar-options{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+body.section-cuenta .avatar-option{display:block;min-width:0;cursor:pointer}
+body.section-cuenta .avatar-option input{position:absolute;opacity:0;width:1px;height:1px}
+body.section-cuenta .avatar-choice{display:block;width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;padding:3px;background:#111;border:2px solid #41474b;transition:border-color .2s,transform .2s}
+body.section-cuenta .avatar-choice img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;filter:saturate(.72) contrast(1.08)}
+body.section-cuenta .avatar-option input:checked+.avatar-choice{border:3px solid #bd615b;box-shadow:0 0 0 3px #bd615b33,0 0 22px #bd615b44;transform:scale(1.06)}
+body.section-cuenta .avatar-option:focus-within .avatar-choice{outline:2px solid #e0b2a7;outline-offset:3px}
+body.section-cuenta .profile-form .button{width:100%}
+@media(max-width:780px){
+ body.section-cuenta .account-page{padding-left:16px;padding-right:16px}
+ body.section-cuenta .account-dashboard{width:100%;margin-top:24px}
+ body.section-cuenta .profile-panel,body.section-cuenta .activity-panel{padding:20px 16px}
+ body.section-cuenta .avatar-options{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+ body.section-cuenta .story-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.section-cuenta .account-actions{display:grid;grid-template-columns:1fr}
+ body.section-cuenta .account-actions>*{width:100%;min-width:0}
+}
