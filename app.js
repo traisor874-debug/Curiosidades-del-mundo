@@ -204,7 +204,14 @@
         showStatus(status,error.message || 'Error al comprobar permisos.',true);
       }
     }
-    login?.addEventListener('click',async()=>{const {data:{user}}=await client.auth.getUser();if(!user){showStatus(status,'Primero inicia sesión en Mi cuenta.',true);return;}await refresh();});
+    login?.addEventListener('click',async()=>{
+      try {
+        const {data,error}=await client.auth.getSession();
+        if(error) throw error;
+        if(!data?.session?.user){showStatus(status,'Primero inicia sesión en Mi cuenta.',true);return;}
+        await refresh();
+      } catch(error) { showStatus(status,error.message || 'No se pudo comprobar la sesión.',true); }
+    });
     await refresh();
   }
   async function initVideos(){
