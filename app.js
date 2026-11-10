@@ -1,7 +1,11 @@
 (() => {
   const cfg = window.UMBRAL_CONFIG;
   const hasSupabase = !!(window.supabase && cfg && cfg.url && cfg.key);
-  const client = hasSupabase ? window.supabase.createClient(cfg.url, cfg.key) : null;
+  let client = null;
+  if (hasSupabase) {
+    try { client = window.supabase.createClient(cfg.url, cfg.key); }
+    catch (error) { console.error('No se pudo inicializar Supabase:', error); }
+  }
   const $ = (selector, scope=document) => scope.querySelector(selector);
   const $$ = (selector, scope=document) => [...scope.querySelectorAll(selector)];
   const escapeHTML = (value='') => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -35,7 +39,10 @@
     try {
       let query = client.from('stories').select('id,title,summary,body,category,author_name,created_at,published_at,status').eq('status','published').order('published_at',{ascending:false}).limit(limit);
       if (filters.category) query = query.eq('category',filters.category);
-      if (filters.search) query = query.or(`title.ilike.%${filters.search}%,summary.ilike.%${filters.search}%,body.ilike.%${filters.search}%`);
+      if (filters.search) {
+        const term = filters.search.replace(/[(),.%]/g,' ').replace(/\\s+/g,' ').trim();
+        if (term) query = query.or(`title.ilike.%${term}%,summary.ilike.%${term}%,body.ilike.%${term}%`);
+      }
       const {data,error} = await query;
       if (error) throw error;
       target.innerHTML = data && data.length ? data.map(card).join('') : '<p class="empty">Todavía no hay relatos publicados. ¿Te animas a compartir el primero?</p>';
@@ -60,12 +67,13 @@
   async function initStory() {
     const target = $('#story-content');
     if (!target) return;
+    if (!client) { target.innerHTML='<p class="empty">No se pudo conectar con el servicio de historias. Inténtalo más tarde.</p>'; return; }
     const id = new URLSearchParams(location.search).get('id');
     if (!id) { target.innerHTML='<p class="empty">No se indicó qué relato abrir. Vuelve a la biblioteca.</p>'; return; }
     try {
       const {data,error}=await client.from('stories').select('title,body,category,author_name,created_at,published_at,status').eq('id',id).eq('status','published').single();
       if(error) throw error;
-      document.title = `${data.title} | Umbral`;
+      document.title = `${data.title} | D’Asombro`;
       target.innerHTML=`<article class="reading"><p class="eyebrow">${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><p class="meta">Por ${escapeHTML(data.author_name || 'Anónimo')} · ${escapeHTML(dateText(data.published_at || data.created_at))}</p><div class="bodytext">${escapeHTML(data.body)}</div><p><a class="textlink" href="historias.html">← Volver a historias</a></p></article>`;
     } catch(e) {
       console.error(e);
@@ -114,13 +122,54 @@
     if (!loginForm && !signupForm && !logout) return;
     if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
     async function refresh(){
-      const {data:{user}}=await client.auth.getUser();
-      if(signed) signed.textContent=user ? `Sesión iniciada: ${user.email}` : 'No has iniciado sesión.';
-      if(logout) logout.classList.toggle('hidden',!user);
+      try {
+        const {data,error}=await client.auth.getSession();
+        if(error) throw error;
+        const user=data?.session?.user || null;
+        if(signed) signed.textContent=user ? `Sesión iniciada: ${user.email}` : 'No has iniciado sesión.';
+        if(logout) logout.classList.toggle('hidden',!user);
+        return user;
+      } catch(error) {
+        console.error('Error al comprobar la sesión:',error);
+        if(signed) signed.textContent='No se pudo comprobar tu sesión. Recarga la página e inténtalo de nuevo.';
+        showStatus(status,error.message || 'No se pudo comprobar la sesión.',true);
+        return null;
+      }
     }
-    loginForm?.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(loginForm);const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});if(error)showStatus(status,error.message,true);else{showStatus(status,'Sesión iniciada correctamente.');await refresh();}});
-    signupForm?.addEventListener('submit',async e=>{e.preventDefault();const fd=new FormData(signupForm);const {error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password')});if(error)showStatus(status,error.message,true);else showStatus(status,'Cuenta creada. Si Supabase solicita confirmación por correo, revisa tu bandeja antes de iniciar sesión.');});
-    logout?.addEventListener('click',async()=>{await client.auth.signOut();showStatus(status,'Sesión cerrada.');await refresh();});
+    loginForm?.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const button=$('button[type="submit"]',loginForm);
+      if(button) button.disabled=true;
+      try {
+        const fd=new FormData(loginForm);
+        const {error}=await client.auth.signInWithPassword({email:fd.get('email'),password:fd.get('password')});
+        if(error) throw error;
+        showStatus(status,'Sesión iniciada correctamente.');
+        await refresh();
+      } catch(error) { showStatus(status,error.message || 'No se pudo iniciar sesión.',true); }
+      finally { if(button) button.disabled=false; }
+    });
+    signupForm?.addEventListener('submit',async e=>{
+      e.preventDefault();
+      const button=$('button[type="submit"]',signupForm);
+      if(button) button.disabled=true;
+      try {
+        const fd=new FormData(signupForm);
+        const {data,error}=await client.auth.signUp({email:fd.get('email'),password:fd.get('password')});
+        if(error) throw error;
+        showStatus(status,data?.session?'Cuenta creada y sesión iniciada.':'Cuenta creada. Revisa tu correo si Supabase solicita confirmación antes de iniciar sesión.');
+        if(data?.session) await refresh();
+      } catch(error) { showStatus(status,error.message || 'No se pudo crear la cuenta.',true); }
+      finally { if(button) button.disabled=false; }
+    });
+    logout?.addEventListener('click',async()=>{
+      try {
+        const {error}=await client.auth.signOut();
+        if(error) throw error;
+        showStatus(status,'Sesión cerrada.');
+        await refresh();
+      } catch(error) { showStatus(status,error.message || 'No se pudo cerrar la sesión.',true); }
+    });
     await refresh();
   }
   async function initAdmin() {
@@ -128,14 +177,32 @@
     if(!target && !login) return;
     if(!client){showStatus(status,'No se pudo iniciar Supabase. Revisa config.js.',true);return;}
     async function refresh(){
-      const {data:{user}}=await client.auth.getUser();
-      if(!user){target && (target.innerHTML='<p class="empty">Inicia sesión con una cuenta autorizada como administradora.</p>');return;}
-      const {data:admin,error:adminError}=await client.from('admin_users').select('user_id').eq('user_id',user.id).maybeSingle();
-      if(adminError || !admin){target && (target.innerHTML='<p class="empty">Esta cuenta no tiene permisos de administración.</p>');return;}
-      const {data,error}=await client.from('stories').select('id,title,author_name,category,status,created_at').order('created_at',{ascending:false}).limit(100);
-      if(error){target.innerHTML='<p class="empty">No se pudieron cargar los relatos. Revisa las políticas RLS.</p>';return;}
-      target.innerHTML=(data||[]).map(s=>`<div class="item"><p class="meta">${escapeHTML(s.status)} · ${escapeHTML(s.category)} · ${escapeHTML(s.author_name)}</p><h3>${escapeHTML(s.title)}</h3><div class="actions-row">${['published','changes','rejected'].map(st=>`<button data-id="${escapeHTML(s.id)}" data-status="${st}">${st==='published'?'Publicar':st==='changes'?'Solicitar cambios':'Rechazar'}</button>`).join('')}</div></div>`).join('') || '<p class="empty">No hay relatos enviados.</p>';
-      $$('button[data-id]',target).forEach(btn=>btn.addEventListener('click',async()=>{const {error}=await client.from('stories').update({status:btn.dataset.status,published_at:btn.dataset.status==='published'?new Date().toISOString():null,updated_at:new Date().toISOString()}).eq('id',btn.dataset.id);if(error){showStatus(status,'No se pudo actualizar: '+error.message,true);}else{showStatus(status,'Estado actualizado.');await refresh();}}));
+      try {
+        const {data:sessionData,error:sessionError}=await client.auth.getSession();
+        if(sessionError) throw sessionError;
+        const user=sessionData?.session?.user || null;
+        if(!user){target && (target.innerHTML='<p class="empty">Inicia sesión en Mi cuenta con una cuenta autorizada como administradora.</p>');return;}
+        const {data:admin,error:adminError}=await client.from('admin_users').select('user_id').eq('user_id',user.id).maybeSingle();
+        if(adminError) throw adminError;
+        if(!admin){target && (target.innerHTML='<p class="empty">Esta cuenta no tiene permisos de administración.</p>');return;}
+        const {data,error}=await client.from('stories').select('id,title,author_name,category,status,created_at').order('created_at',{ascending:false}).limit(100);
+        if(error) throw error;
+        target.innerHTML=(data||[]).map(s=>`<div class="item"><p class="meta">${escapeHTML(s.status)} · ${escapeHTML(s.category)} · ${escapeHTML(s.author_name)}</p><h3>${escapeHTML(s.title)}</h3><div class="actions-row">${['published','changes','rejected'].map(st=>`<button data-id="${escapeHTML(s.id)}" data-status="${st}">${st==='published'?'Publicar':st==='changes'?'Solicitar cambios':'Rechazar'}</button>`).join('')}</div></div>`).join('') || '<p class="empty">No hay relatos enviados.</p>';
+        $('button[data-id]',target).forEach(btn=>btn.addEventListener('click',async()=>{
+          btn.disabled=true;
+          try {
+            const nextStatus=btn.dataset.status;
+            const {error}=await client.from('stories').update({status:nextStatus,published_at:nextStatus==='published'?new Date().toISOString():null,updated_at:new Date().toISOString()}).eq('id',btn.dataset.id);
+            if(error) throw error;
+            showStatus(status,'Estado actualizado.');
+            await refresh();
+          } catch(error) { showStatus(status,'No se pudo actualizar: '+(error.message || 'error desconocido'),true); btn.disabled=false; }
+        }));
+      } catch(error) {
+        console.error('Error en el panel de administración:',error);
+        if(target) target.innerHTML='<p class="empty">No se pudo cargar el panel. Comprueba la sesión, la tabla admin_users y las políticas de acceso en Supabase.</p>';
+        showStatus(status,error.message || 'Error al comprobar permisos.',true);
+      }
     }
     login?.addEventListener('click',async()=>{const {data:{user}}=await client.auth.getUser();if(!user){showStatus(status,'Primero inicia sesión en Mi cuenta.',true);return;}await refresh();});
     await refresh();
