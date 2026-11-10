@@ -74,7 +74,7 @@
       const {data,error}=await client.from('stories').select('title,body,category,author_name,created_at,published_at,status').eq('id',id).eq('status','published').single();
       if(error) throw error;
       document.title = `${data.title} | D’Asombro`;
-      target.innerHTML=`<article class="story-scene"><header class="story-masthead"><p class="eyebrow">ARCHIVO D’ASOMBRO · ${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><div class="story-byline"><span>Por ${escapeHTML(data.author_name || "Anónimo")}</span><span>${escapeHTML(dateText(data.published_at || data.created_at))}</span><span>Lectura</span></div></header><section class="reading-panel"><div class="bodytext">${escapeHTML(data.body)}</div></section><div class="story-end"><a class="textlink" href="historias.html">← Volver a la biblioteca</a><span class="meta">Cada historia deja algo detrás.</span></div></article>`;
+      target.innerHTML=`<article class="story-scene"><div class="story-masthead"><p class="eyebrow">ARCHIVO D’ASOMBRO · ${escapeHTML(data.category)}</p><h1>${escapeHTML(data.title)}</h1><div class="story-byline"><span>Por ${escapeHTML(data.author_name || "Anónimo")}</span><span>${escapeHTML(dateText(data.published_at || data.created_at))}</span><span>Lectura</span></div></div><section class="reading-panel"><div class="bodytext">${escapeHTML(data.body)}</div></section><div class="story-end"><a class="textlink" href="historias.html">← Volver a la biblioteca</a><span class="meta">Cada historia deja algo detrás.</span></div></article>`;
     } catch(e) {
       console.error(e);
       target.innerHTML='<p class="empty">No encontramos ese relato publicado. Puede que el enlace sea incorrecto o que el relato ya no esté disponible.</p>';
