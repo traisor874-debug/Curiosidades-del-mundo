@@ -747,3 +747,24 @@ body.section-privacidad .page{background:linear-gradient(135deg,rgba(10,16,22,.9
  background:linear-gradient(#b30c28,#69000e);transform:rotate(22deg);
  box-shadow:-.38em -.54em 0 -.025em #a20a21,.32em -.78em 0 -.035em #a20a21;
 }
+
+
+/* Ajuste final del logotipo: la O tipográfica es la única O; sin aro/símbolo superpuesto */
+.brand strong{display:inline;white-space:nowrap}
+.brand .brand-mark{
+ display:inline;position:relative;isolation:isolate;
+ color:#bd102b!important;font-size:1em!important;font-weight:inherit;
+ margin:0!important;transform:none!important;
+ text-shadow:0 0 5px rgba(190,12,42,.72),0 0 15px rgba(145,0,24,.48)!important;
+}
+.brand .brand-mark:before{
+ content:"";position:absolute;z-index:-1;pointer-events:none;
+ left:-.24em;right:-.22em;top:-.34em;bottom:-.18em;
+ background:
+  radial-gradient(circle at 15% 25%,#b20b27 0 1.5px,transparent 2px),
+  radial-gradient(circle at 82% 8%,#c01631 0 1.7px,transparent 2.2px),
+  radial-gradient(circle at 98% 42%,#a50922 0 1.4px,transparent 2px),
+  radial-gradient(circle at 75% 91%,#b20b27 0 1.6px,transparent 2.2px),
+  radial-gradient(circle at 8% 76%,#97071d 0 1.3px,transparent 1.9px);
+}
+.brand .brand-mark:after{content:none!important}
