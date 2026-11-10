@@ -768,3 +768,114 @@ body.section-privacidad .page{background:linear-gradient(135deg,rgba(10,16,22,.9
   radial-gradient(circle at 8% 76%,#97071d 0 1.3px,transparent 1.9px);
 }
 .brand .brand-mark:after{content:none!important}
+
+
+
+/* ACCOUNT PAGE — polished dossier layout, aligned with the visual reference */
+body.account-redesign{
+ background:#070708;
+ background-image:radial-gradient(ellipse at 82% 18%,rgba(22,48,58,.24),transparent 38%),url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+}
+.account-redesign .account-page{max-width:1180px;padding:34px clamp(16px,3vw,34px) 76px;margin:0 auto}
+.account-redesign .account-hero{
+ min-height:300px;margin:12px auto 28px;padding:42px clamp(22px,4vw,54px);
+ border:1px solid #51413c;box-shadow:0 18px 48px #0009;
+ background:
+  linear-gradient(90deg,rgba(5,6,8,.98) 0%,rgba(5,6,8,.91) 42%,rgba(5,6,8,.24) 100%),
+  url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1800&q=90') center 48%/cover;
+}
+.account-redesign .account-hero:after{background:linear-gradient(90deg,transparent 45%,rgba(0,0,0,.22)),repeating-linear-gradient(0deg,transparent 0 4px,#fff04 5px)}
+.account-redesign .account-hero-art{
+ right:2%;top:8%;width:42%;height:84%;opacity:.8;mix-blend-mode:normal;
+ border:9px solid rgba(207,194,177,.26);outline:1px solid #bda58b66;
+ box-shadow:0 18px 38px #000b;filter:grayscale(.72) sepia(.22) brightness(.62);
+ clip-path:polygon(4% 2%,98% 0,94% 96%,0 100%);
+}
+.account-redesign .account-hero-copy{max-width:62%}
+.account-redesign .account-hero-copy h1{font-size:clamp(3.2rem,7vw,5.1rem)}
+.account-redesign .account-hero-copy>p:last-child{font-size:1.04rem;max-width:500px}
+.account-redesign .account-dashboard{gap:18px}
+.account-redesign .dossier-panel,.account-redesign .activity-panel{
+ border:1px solid #51433d;border-radius:12px;
+ background:linear-gradient(135deg,rgba(22,20,19,.97),rgba(8,9,11,.98)),url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+ box-shadow:0 18px 48px #0008,inset 0 1px #ffffff0c;
+}
+.account-redesign .dossier-panel{padding:26px 28px 18px}
+.account-redesign .profile-topline{padding:0 0 24px}
+.account-redesign .profile-heading{gap:24px}
+.account-redesign .avatar-preview{width:142px;height:142px;flex-basis:142px;border:2px solid #a52a35;box-shadow:0 0 0 4px #a52a3522,0 8px 28px #000a}
+.account-redesign .avatar-preview img{filter:grayscale(.72) contrast(1.14) brightness(.76)}
+.account-redesign .profile-identity h2{font-size:clamp(2rem,4vw,2.8rem)}
+.account-redesign .edit-profile-button{border-color:#78635a;padding:12px 17px}
+.account-redesign .avatar-collection{padding:20px 0 22px}
+.account-redesign .avatar-collection-heading strong{font:600 1.2rem var(--serif);letter-spacing:.01em}
+.account-redesign .avatar-quick{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.account-redesign .avatar-quick button{aspect-ratio:1;border-radius:10px;padding:3px;background:#08090b;border-color:#62534d}
+.account-redesign .avatar-quick button img{border-radius:6px;filter:grayscale(.55) contrast(1.1) brightness(.82)}
+.account-redesign .avatar-quick button.active{border:2px solid #b72b35;box-shadow:0 0 0 3px #b72b3533,0 0 20px #a51b2c55}
+.account-redesign .account-metrics{margin-top:0;padding-top:12px}
+.account-redesign .account-metrics>div{min-height:76px}
+.account-redesign .account-metrics strong{font-size:2rem}
+.account-redesign .account-main-tabs{gap:8px;padding:0 0 2px}
+.account-redesign .account-main-tabs button{border:1px solid #453a36;background:#111112}
+.account-redesign .account-main-tabs button.active{background:linear-gradient(120deg,#941d2b,#5b111b);border-color:#bd3541}
+.account-redesign .activity-panel{padding:25px 26px}
+.account-redesign .activity-heading h2{font-size:clamp(1.9rem,4vw,2.5rem)}
+.account-redesign .my-story{grid-template-columns:128px minmax(0,1fr) auto;padding:10px;gap:16px;background:linear-gradient(110deg,#111214,#090a0c);border-color:#45403d}
+.account-redesign .my-story-art{width:128px;height:104px;filter:grayscale(.42) brightness(.82)}
+.account-redesign .story-state{font-size:.8rem}
+.account-redesign .settings-list a,.account-redesign .settings-list button{padding:17px 10px}
+.account-redesign .profile-form{border-top:1px solid #453a36;margin-top:18px}
+.account-redesign .profile-form label{display:grid;gap:9px;color:#e7ddd7;font-weight:600}
+.account-redesign .profile-form input:not([type=radio]){width:100%;padding:15px 16px;background:#090d10;border:1px solid #46525a;color:#f3eeea;border-radius:3px}
+.account-redesign .avatar-picker{border:0;padding:0}
+.account-redesign .avatar-picker legend{font:600 1.2rem var(--serif);color:#eee5df;margin-bottom:8px}
+.account-redesign .avatar-picker>p{color:#aaa6a2}
+.account-redesign .avatar-options{grid-template-columns:repeat(6,minmax(0,1fr))}
+.account-redesign .avatar-choice{aspect-ratio:1;border-radius:10px;border:1px solid #514943}
+.account-redesign .avatar-choice img{border-radius:6px;filter:grayscale(.55) brightness(.82)}
+.account-redesign .account-footer{max-width:none}
+@media(max-width:700px){
+ .account-redesign .account-page{padding:18px 14px 48px}
+ .account-redesign .account-hero{min-height:270px;margin:0 -2px 18px;padding:30px 18px;background-position:58% center}
+ .account-redesign .account-hero-copy{max-width:82%}
+ .account-redesign .account-hero-copy h1{font-size:clamp(2.8rem,12vw,3.6rem)}
+ .account-redesign .account-hero-copy>p:last-child{font-size:.96rem;max-width:310px}
+ .account-redesign .account-hero-art{width:48%;height:78%;right:-2%;top:12%;opacity:.52}
+ .account-redesign .dossier-panel{padding:18px 15px 12px}
+ .account-redesign .profile-topline{align-items:flex-start;gap:10px;padding-bottom:18px}
+ .account-redesign .profile-heading{align-items:center;gap:14px}
+ .account-redesign .avatar-preview{width:94px;height:94px;flex-basis:94px;padding:3px}
+ .account-redesign .profile-identity h2{font-size:clamp(1.45rem,6vw,2rem);overflow-wrap:anywhere}
+ .account-redesign .profile-identity .meta{font-size:.82rem;overflow-wrap:anywhere}
+ .account-redesign .author-tag{font-size:.78rem}
+ .account-redesign .edit-profile-button{font-size:0;padding:10px;width:42px;height:42px;flex:0 0 42px}
+ .account-redesign .edit-profile-button:after{content:"✎";font-size:1.1rem}
+ .account-redesign .avatar-collection{padding:16px 0}
+ .account-redesign .avatar-quick{grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}
+ .account-redesign .avatar-quick button{aspect-ratio:1;padding:2px;border-radius:8px}
+ .account-redesign .account-metrics{grid-template-columns:repeat(4,minmax(0,1fr));padding-top:8px}
+ .account-redesign .account-metrics>div{min-height:68px;padding:7px 3px;border-right:1px solid #39312d}
+ .account-redesign .account-metrics strong{font-size:1.55rem}
+ .account-redesign .account-metrics span{font-size:.66rem;line-height:1.25}
+ .account-redesign .account-main-tabs{display:flex;overflow-x:auto;gap:6px;padding:0 0 5px;scrollbar-width:none}
+ .account-redesign .account-main-tabs::-webkit-scrollbar{display:none}
+ .account-redesign .account-main-tabs button{flex:1 0 auto;padding:11px 12px;font-size:.8rem;white-space:nowrap}
+ .account-redesign .activity-panel{padding:20px 15px}
+ .account-redesign .account-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+ .account-redesign .account-tabs button{flex:0 0 auto;white-space:nowrap}
+ .account-redesign .my-story{grid-template-columns:82px minmax(0,1fr);gap:11px;padding:9px}
+ .account-redesign .my-story-art{width:82px;height:88px}
+ .account-redesign .my-story h3{font-size:1.08rem}
+ .account-redesign .my-story .story-state{grid-column:2;justify-self:start;font-size:.72rem;padding:6px 9px}
+ .account-redesign .activity-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+ .account-redesign .activity-heading h2{font-size:1.8rem}
+ .account-redesign .activity-heading p{font-size:.82rem;line-height:1.45}
+ .account-redesign .settings-list a,.account-redesign .settings-list button{gap:11px;padding:15px 4px}
+ .account-redesign .settings-list small{font-size:.76rem}
+ .account-redesign .avatar-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+ .account-redesign .profile-edit-actions{flex-direction:column}
+ .account-redesign .profile-edit-actions .button{width:100%}
+ .account-redesign .form-layout{grid-template-columns:1fr;margin:22px auto}
+ .account-redesign .form{padding:20px 16px}
+}
