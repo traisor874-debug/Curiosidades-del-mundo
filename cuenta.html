@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="D’Asombro: historias sorprendentes, inquietantes y extraordinarias de la comunidad.">
 <title>Mi cuenta | D’Asombro</title>
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
-<body>
+<body class="section-cuenta">
 <header class="site-header">
 <a class="brand" href="index.html"><strong>D’ASOMBRO</strong><small>HISTORIAS QUE DESPIERTAN ALGO</small></a>
-<nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html">Mi cuenta</a></nav>
+<nav aria-label="Navegación principal"><a href="historias.html">Historias</a><a href="videos.html">Narraciones</a><a href="enviar.html">Enviar relato</a><a href="cuenta.html" aria-current="page">Mi cuenta</a></nav>
 </header>
 
 <main class="page"><p class="eyebrow">TU ESPACIO</p><h1>Mi cuenta</h1><p class="leadpage">Puedes enviar relatos de forma anónima. Si quieres una cuenta, regístrate o inicia sesión aquí.</p><p id="signed-in" class="notice">Comprobando sesión…</p><div class="form-layout"><form id="login-form" class="form"><h2>Iniciar sesión</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña<input type="password" name="password" required autocomplete="current-password" minlength="6"></label><button class="button" type="submit">Entrar</button></form><form id="signup-form" class="form"><h2>Crear cuenta</h2><label>Correo electrónico<input type="email" name="email" required autocomplete="email"></label><label>Contraseña (mínimo 6 caracteres)<input type="password" name="password" required minlength="6" autocomplete="new-password"></label><button class="button" type="submit">Crear cuenta</button></form></div><p id="account-status" class="status" aria-live="polite"></p><button id="logout-button" class="button hidden" type="button">Cerrar sesión</button></main>
