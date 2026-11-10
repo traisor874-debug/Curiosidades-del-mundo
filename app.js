@@ -40,7 +40,7 @@
       let query = client.from('stories').select('id,title,summary,body,category,author_name,created_at,published_at,status').eq('status','published').order('published_at',{ascending:false}).limit(limit);
       if (filters.category) query = query.eq('category',filters.category);
       if (filters.search) {
-        const term = filters.search.replace(/[(),.%]/g,' ').replace(/\\s+/g,' ').trim();
+        const term = filters.search.replace(/[(),.%]/g,' ').replace(/\s+/g,' ').trim();
         if (term) query = query.or(`title.ilike.%${term}%,summary.ilike.%${term}%,body.ilike.%${term}%`);
       }
       const {data,error} = await query;
