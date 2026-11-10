@@ -164,3 +164,48 @@ body.section-privacidad .prose h2{color:#a7c2df}
  body.section-historias .library-intro{background-position:58% center}
  body.section-admin .page,body.section-cuenta .page,body.section-enviar .page{padding-top:55px}
 }
+
+/* Member profile and story dashboard */
+.account-page{max-width:none;padding-left:max(6vw,22px);padding-right:max(6vw,22px);background:radial-gradient(ellipse at 80% 8%,#182c37 0,transparent 38%),radial-gradient(ellipse at 8% 65%,#211719 0,transparent 34%),#090d12}
+.account-page>h1{font-size:clamp(3rem,7vw,5.4rem)}
+.account-dashboard{max-width:1120px;margin:34px auto 0;display:grid;gap:22px}
+.account-dashboard.hidden{display:none}
+.profile-panel,.activity-panel{background:linear-gradient(145deg,#141e25,#0d1319);border:1px solid #354650;padding:clamp(20px,4vw,38px);box-shadow:0 20px 60px #0005}
+.profile-heading{display:flex;align-items:center;gap:20px;margin-bottom:28px}
+.avatar-preview{width:88px;height:88px;flex:0 0 88px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 25%,#536b78,#17242d 68%);border:1px solid #8299a2;color:#e7d4ca;font:2.8rem var(--serif);box-shadow:0 0 35px #7894a522}
+.profile-heading h2,.activity-heading h2{font:600 clamp(1.7rem,4vw,2.5rem) var(--serif);margin:0}
+.profile-form{display:grid;gap:20px}
+.profile-form>label{display:grid;gap:8px}
+.profile-form input:not([type=radio]){width:100%;padding:15px;background:#090e12;border:1px solid #394b55;color:#edf0ef}
+.avatar-picker{border:0;padding:0;margin:0}
+.avatar-picker legend{font-weight:600;margin-bottom:8px}
+.avatar-options{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.avatar-options label{cursor:pointer;position:relative}
+.avatar-options input{position:absolute;opacity:0;pointer-events:none}
+.avatar-choice{width:54px;height:54px;display:grid;place-items:center;border:1px solid #465963;border-radius:50%;background:#101a21;color:#d2c0b9;font-size:1.65rem;transition:.2s}
+.avatar-options input:checked+.avatar-choice{border:2px solid #d0a69a;background:#382b2d;box-shadow:0 0 0 4px #bd8e8228,0 0 25px #bd8e8233}
+.avatar-options label:focus-within .avatar-choice{outline:2px solid #d0a69a;outline-offset:3px}
+.activity-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.activity-total{width:48px;height:48px;display:grid;place-items:center;border:1px solid #526773;border-radius:50%;font-size:1.15rem}
+.story-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:25px 0}
+.story-stats>div{padding:16px 12px;background:#0b1116;border:1px solid #2d3b43;display:grid;gap:4px}
+.story-stats strong{font:600 1.8rem var(--serif);color:#e5c3b8}
+.story-stats span{font-size:.78rem;color:#aeb9bc}
+.account-tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #34434b;padding-bottom:14px}
+.account-tabs button{border:1px solid #34434b;background:transparent;color:#c5cecf;padding:10px 13px;cursor:pointer}
+.account-tabs button.active{background:#9c7169;border-color:#9c7169;color:#080a0d}
+.my-stories{display:grid;gap:12px;padding-top:18px}
+.my-story{padding:18px;background:#0b1116;border:1px solid #2c3b43}
+.my-story h3{font:600 1.5rem var(--serif);margin:12px 0 6px}
+.my-story-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.story-state{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border:1px solid #53616a;color:#c7d0d2}
+.state-pending{border-color:#9c8661;color:#dfc795}
+.state-changes{border-color:#b87559;color:#e6a88d}
+.state-published{border-color:#638b72;color:#a9d1b4}
+.state-rejected{border-color:#915d64;color:#d9a0a5}
+.moderation-note{padding:12px;border-left:2px solid #c78b75;background:#211716;color:#e0b9aa}
+.account-empty{padding:25px}
+.account-empty a{color:#d5a99e}
+.account-actions{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.button-quiet{background:transparent!important;color:#d0c6c2!important;border-color:#5a4b49!important}
+@media(max-width:700px){.account-page{padding-top:52px}.profile-heading{align-items:flex-start}.avatar-preview{width:70px;height:70px;flex-basis:70px}.story-stats{grid-template-columns:repeat(2,1fr)}.account-tabs{flex-wrap:nowrap;overflow-x:auto}.account-tabs button{white-space:nowrap}.my-story-top{align-items:flex-start;flex-direction:column}.account-actions{align-items:stretch}.account-actions>*{width:100%;text-align:center}}
