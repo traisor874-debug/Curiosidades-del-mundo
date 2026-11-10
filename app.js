@@ -59,6 +59,8 @@
     if (!target) return;
     const search = $('#story-search');
     const category = $('#story-category');
+    const requestedCategory = new URLSearchParams(location.search).get('categoria');
+    if (category && categories.includes(requestedCategory)) category.value = requestedCategory;
     const refresh = () => loadStories(target,60,{search:search?.value.trim() || '',category:category?.value || ''});
     search?.addEventListener('input',refresh);
     category?.addEventListener('change',refresh);
