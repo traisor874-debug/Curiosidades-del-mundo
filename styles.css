@@ -239,3 +239,128 @@ body.section-cuenta .profile-form .button{width:100%}
  body.section-cuenta .account-actions{display:grid;grid-template-columns:1fr}
  body.section-cuenta .account-actions>*{width:100%;min-width:0}
 }
+
+/* D'Asombro author dossier — visual system */
+body.account-redesign{background:#070708;color:#eee8e3;background-image:radial-gradient(ellipse at 80% 8%,#30211b55,transparent 34%),url('https://www.transparenttextures.com/patterns/ black-linen.png')}
+.account-redesign .site-header{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;padding:16px clamp(18px,4vw,44px) 0;background:linear-gradient(180deg,#090909,#0b0a0a);border-bottom:1px solid #4a3b35;box-shadow:0 8px 25px #0009}
+.account-redesign .site-header .brand{grid-column:1;grid-row:1}
+.account-redesign .site-header .brand strong{font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.06em;color:#e6d9d1}
+.account-redesign .brand-mark{color:#a51e2a;text-shadow:0 0 14px #a51e2a;font-size:.9em;margin-left:-.12em}
+.account-redesign .site-header nav{grid-column:1/-1;grid-row:2;display:flex;justify-content:center;gap:clamp(18px,4vw,52px);padding:18px 0 13px}
+.account-redesign .site-header nav a{font-family:var(--serif);font-size:1.02rem;color:#d7cbc4}
+.account-redesign .site-header nav a[aria-current=page]:after{background:#a51e2a;height:3px;bottom:-14px}
+.account-redesign .header-tools{grid-column:2;grid-row:1;display:flex;gap:22px}
+.account-redesign .header-icon{position:relative;color:#c9bdb6;text-decoration:none;font-size:1.7rem;line-height:1}
+.account-redesign .header-icon i{position:absolute;width:8px;height:8px;border-radius:50%;background:#a51e2a;right:0;top:0}
+.account-redesign .account-page{width:100%;max-width:none;margin:0;padding:0 clamp(14px,2.2vw,30px) 70px;background:transparent}
+.account-redesign .account-hero{max-width:1320px;margin:0 auto;min-height:240px;position:relative;display:flex;align-items:center;overflow:hidden;padding:36px 26px 34px;border-bottom:1px solid #41332e;background:linear-gradient(90deg,#080808 0%,#080808f2 48%,#08080830 100%),url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=85') center 48%/cover}
+.account-redesign .account-hero:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,#fff0 0 3px,#fff05 4px),linear-gradient(90deg,#08080855,transparent 65%)}
+.account-hero-copy{position:relative;z-index:1;max-width:600px}
+.account-hero-copy .eyebrow{display:flex;align-items:center;gap:18px;color:#d5c3b8;letter-spacing:.28em;font-size:.76rem}
+.account-hero-copy .eyebrow span{display:inline-block;width:100px;height:1px;background:#8e7165}
+.account-hero-copy h1{font:600 clamp(3rem,7vw,5.2rem)/.98 var(--serif);margin:18px 0 10px;color:#f0e9e4;letter-spacing:-.04em}
+.account-hero-copy>p:last-child{max-width:480px;color:#c5bcb7;font-size:1.02rem;line-height:1.55;margin:0}
+.account-hero-art{position:absolute;right:2%;top:10%;width:min(42%,500px);height:90%;background:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=85') center/cover;filter:grayscale(.75) sepia(.28) brightness(.58);clip-path:polygon(12% 0,100% 5%,94% 100%,0 85%);opacity:.72;mix-blend-mode:screen}
+.account-redesign .account-notice{max-width:1320px;margin:18px auto;padding:12px 18px;background:#171311;border:1px solid #4c342f;color:#d8c8bf}
+.account-redesign .account-dashboard{max-width:1320px;width:100%;margin:10px auto 0;display:grid;gap:22px}
+.account-redesign .dossier-panel,.account-redesign .activity-panel{background:linear-gradient(135deg,#111111f2,#0c0c0df5),url('https://www.transparenttextures.com/patterns/asfalt-dark.png');border:1px solid #554943;border-radius:13px;padding:24px;box-shadow:0 18px 45px #0009;position:relative;overflow:hidden}
+.account-redesign .dossier-panel:before,.account-redesign .activity-panel:before{content:"";position:absolute;inset:0;pointer-events:none;border:1px solid #ffffff0b;border-radius:inherit;background:radial-gradient(ellipse at 12% 0%,#9a4a3a12,transparent 48%)}
+.account-redesign .profile-topline{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 8px 22px;border-bottom:1px solid #443832;position:relative}
+.account-redesign .profile-heading{display:flex;align-items:center;gap:24px;margin:0;min-width:0}
+.account-redesign .avatar-preview{width:150px;height:150px;flex:0 0 150px;border:2px solid #9d2029;border-radius:50%;padding:5px;background:#080808;box-shadow:0 0 0 1px #5d2428,0 0 25px #8f182333}
+.account-redesign .avatar-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%;filter:grayscale(1) contrast(1.18) brightness(.7)}
+.account-redesign .profile-identity h2{font:600 clamp(1.9rem,4vw,3rem) var(--serif);margin:0 0 6px;color:#e8ddd6}
+.account-redesign .profile-identity .meta{font-size:1rem;margin:0 0 10px;color:#c5b9b2}
+.account-redesign .author-tag{font-size:.88rem;color:#b8aaa2}
+.account-redesign .edit-profile-button,.account-redesign .avatar-collection-heading button,.account-redesign .subtle-action{background:transparent;color:#e0d4cd;border:1px solid #6b5a52;border-radius:7px;padding:11px 16px;cursor:pointer}
+.account-redesign .edit-profile-button:hover,.account-redesign .avatar-collection-heading button:hover{border-color:#b12a34;color:#fff}
+.account-redesign .avatar-collection{padding:14px 0 18px;border-bottom:1px solid #443832;position:relative}
+.account-redesign .avatar-collection-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;color:#e1d4cd}
+.account-redesign .avatar-collection-heading button{border:0;padding:6px 0}
+.account-redesign .avatar-quick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.account-redesign .avatar-quick button{padding:3px;border:1px solid #514943;border-radius:11px;background:#080808;aspect-ratio:1.15;overflow:hidden;cursor:pointer;transition:.2s}
+.account-redesign .avatar-quick button img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(.85) contrast(1.12) brightness(.78);border-radius:7px}
+.account-redesign .avatar-quick button.active,.account-redesign .avatar-quick button:hover{border:2px solid #b72b35;box-shadow:0 0 0 2px #b72b3533}
+.account-redesign .account-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:16px 0 0;position:relative}
+.account-redesign .account-metrics>div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px;border:0;border-right:1px solid #39312d;background:transparent;text-align:center}
+.account-redesign .account-metrics>div:last-child{border-right:0}
+.account-redesign .account-metrics strong{font:600 1.8rem var(--serif);color:#e8d9d0}
+.account-redesign .account-metrics span{font-size:.82rem;color:#b8aaa2}
+.account-redesign .account-main-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.account-redesign .account-main-tabs button{border:1px solid transparent;background:transparent;color:#d2c6bf;padding:13px 8px;border-radius:7px;font-size:.95rem;cursor:pointer}
+.account-redesign .account-main-tabs button.active{background:linear-gradient(120deg,#8d171f,#581016);border-color:#a42b32;color:#fff;box-shadow:0 5px 18px #600c1444}
+.account-redesign .activity-panel{padding:24px}
+.account-redesign .activity-heading{margin-bottom:18px;position:relative}
+.account-redesign .activity-heading h2{font:600 clamp(1.8rem,4vw,2.5rem) var(--serif);margin:0 0 3px;color:#e8ddd6}
+.account-redesign .activity-heading p{margin:0;color:#b5aaa4;font-size:.9rem}
+.account-redesign .account-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:0 0 14px;border-bottom:1px solid #443832}
+.account-redesign .account-tabs button{border:1px solid #50423c;background:#0b0b0c;color:#cfc2ba;padding:8px 12px;border-radius:20px;font-size:.8rem;cursor:pointer}
+.account-redesign .account-tabs button.active{background:#68151b;border-color:#a72a33;color:#fff}
+.account-redesign .my-stories{padding-top:16px;position:relative}
+.account-redesign .my-story{display:grid;grid-template-columns:150px minmax(0,1fr) auto;align-items:center;gap:18px;padding:10px;background:#0a0a0b;border:1px solid #3e3531;border-radius:10px;margin-bottom:12px}
+.account-redesign .my-story-art{width:150px;height:112px;border-radius:7px;object-fit:cover;filter:grayscale(.7) brightness(.78)}
+.account-redesign .my-story h3{font:600 1.35rem/1.2 var(--serif);margin:0 0 9px;color:#eee5df}
+.account-redesign .my-story .meta{margin:4px 0;color:#b5aaa4;font-size:.82rem}
+.account-redesign .my-story .story-state{border-radius:30px;white-space:nowrap;text-transform:none;letter-spacing:0;padding:8px 12px}
+.account-redesign .settings-list{position:relative}
+.account-redesign .settings-list a,.account-redesign .settings-list button{display:flex;align-items:center;gap:18px;width:100%;padding:15px 8px;border:0;border-bottom:1px solid #3d3430;background:transparent;color:#e0d6cf;text-decoration:none;text-align:left;cursor:pointer}
+.account-redesign .settings-list a>span,.account-redesign .settings-list button>span{font-size:1.5rem;width:34px;text-align:center}
+.account-redesign .settings-list div{display:grid;gap:4px;flex:1}
+.account-redesign .settings-list small{color:#b2a59e}
+.account-redesign .settings-list b{font-size:1.5rem;font-weight:400}
+.account-redesign .settings-list .logout-row{color:#d42c3b}
+.account-redesign .settings-list .logout-row small{color:#b8a5a0}
+.account-redesign .profile-form{padding:22px 8px 10px;position:relative}
+.account-redesign .profile-form.hidden{display:none}
+.account-redesign .avatar-picker{margin:14px 0}
+.account-redesign .avatar-options{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.account-redesign .avatar-option{min-width:0}
+.account-redesign .avatar-choice{width:100%;height:auto;aspect-ratio:1.15;border-radius:10px;padding:3px;background:#0a0a0b}
+.account-redesign .avatar-choice img{width:100%;height:100%;object-fit:cover;border-radius:7px;filter:grayscale(.8) brightness(.8)}
+.account-redesign .avatar-options input:checked+.avatar-choice{border:2px solid #ba2833;background:#170a0c;box-shadow:0 0 0 2px #a5222c55}
+.account-redesign .profile-edit-actions{display:flex;gap:10px}
+.account-redesign .profile-edit-actions .button{width:auto;padding:12px 24px}
+.account-redesign .button{background:#8d1c25;border-color:#a62b33;color:#fff}
+.account-redesign .button:hover{background:#ad2732}
+.account-redesign .button-quiet{background:transparent!important;border-color:#62524b!important;color:#ddd!important}
+.account-redesign .account-actions{justify-content:flex-start}
+.account-redesign .account-footer{background:#080808;border-top:1px solid #45352f}
+.account-redesign .form-layout{max-width:900px;margin:35px auto}
+.account-redesign .form{background:#131111;border-color:#57433c}
+.account-redesign .notice{background:#171211;border-color:#5a3732;color:#e5d4cc}
+@media(max-width:700px){
+ .account-redesign .site-header{padding:13px 16px 0}
+ .account-redesign .site-header nav{justify-content:space-between;gap:8px;overflow-x:auto;white-space:nowrap;padding:14px 0 12px}
+ .account-redesign .site-header nav a{font-size:.88rem}
+ .account-redesign .header-tools{gap:13px}
+ .account-redesign .account-page{padding:0 12px 45px}
+ .account-redesign .account-hero{min-height:215px;padding:28px 8px;background-position:58% center}
+ .account-redesign .account-hero-art{width:50%;right:-7%;opacity:.42}
+ .account-redesign .account-hero-copy{max-width:76%}
+ .account-redesign .account-hero-copy>p:last-child{font-size:.9rem}
+ .account-redesign .dossier-panel,.account-redesign .activity-panel{padding:15px 13px;border-radius:10px}
+ .account-redesign .profile-topline{align-items:flex-start;padding:0 0 15px}
+ .account-redesign .profile-heading{gap:13px}
+ .account-redesign .avatar-preview{width:92px;height:92px;flex-basis:92px}
+ .account-redesign .profile-identity h2{font-size:1.75rem}
+ .account-redesign .profile-identity .meta{font-size:.78rem;overflow-wrap:anywhere}
+ .account-redesign .author-tag{font-size:.76rem}
+ .account-redesign .edit-profile-button{font-size:0;padding:10px}
+ .account-redesign .edit-profile-button:first-letter{font-size:1rem}
+ .account-redesign .avatar-quick{gap:7px}
+ .account-redesign .avatar-quick button{border-radius:8px;aspect-ratio:1}
+ .account-redesign .account-metrics strong{font-size:1.5rem}
+ .account-redesign .account-metrics span{font-size:.68rem}
+ .account-redesign .account-main-tabs{gap:3px}
+ .account-redesign .account-main-tabs button{font-size:.74rem;padding:11px 3px}
+ .account-redesign .account-main-tabs button.active{border-radius:5px}
+ .account-redesign .activity-heading h2{font-size:1.7rem}
+ .account-redesign .activity-heading p{font-size:.8rem}
+ .account-redesign .my-story{grid-template-columns:82px minmax(0,1fr);gap:11px;padding:8px}
+ .account-redesign .my-story-art{width:82px;height:90px}
+ .account-redesign .my-story h3{font-size:1.02rem}
+ .account-redesign .my-story .story-state{grid-column:2;justify-self:start;font-size:.7rem}
+ .account-redesign .avatar-options{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .account-redesign .account-tabs{flex-wrap:nowrap;overflow-x:auto}
+ .account-redesign .account-tabs button{white-space:nowrap}
+}
